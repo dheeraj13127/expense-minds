@@ -3,7 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        "dark-yellow": "#D4A82F",
+        "primary-green": "#66917C",
+      },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         pacifico: ["Pacifico", "cursive"],
