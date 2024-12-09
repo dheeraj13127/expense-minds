@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface GlobalActionType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any;
@@ -12,5 +14,18 @@ export interface UserSliceStateType {
 }
 
 export interface RootState {
-  plan: UserSliceStateType;
+  user: UserSliceStateType;
+}
+
+export interface SidebarSubMenuItems {
+  name: string;
+  url: string;
+  icon: ReactNode;
+}
+
+export interface SideBarMenuItemsType {
+  name: string;
+  url: string;
+  icon: ReactNode;
+  items: SidebarSubMenuItems[];
 }

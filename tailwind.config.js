@@ -13,6 +13,7 @@ export default {
         roboto: ["Roboto", "sans-serif"],
         bree: ["Bree Serif", "serif"],
         opensans: ["Open Sans", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },

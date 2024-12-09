@@ -1,21 +1,14 @@
-import axios from "axios";
-import { getUserProfileURL } from "../../url/URL";
+import { Route, Routes } from "react-router-dom";
+import Records from "../records/Records";
+import Transactions from "../transactions/Transactions";
 
 const Dashboard = () => {
-  const token = localStorage.getItem("token");
-  const fetchUserDetails = async () => {
-    const res = await axios.get(getUserProfileURL, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    console.log(res);
-  };
   return (
     <div>
-      <div>
-        <button onClick={fetchUserDetails}>Dashboard</button>
-      </div>
+      <Routes>
+        <Route path="/records" element={<Records />} />
+        <Route path="/transactions/*" element={<Transactions />} />
+      </Routes>
     </div>
   );
 };
