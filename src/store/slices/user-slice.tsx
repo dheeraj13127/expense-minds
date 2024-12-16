@@ -11,6 +11,14 @@ const userSlice: Slice = createSlice({
     email: "",
     id: "",
     token: "",
+    accounts: [],
+    categories: [],
+    currency: {
+      country: "",
+      name: "",
+      symbol: "",
+      _id: "",
+    },
   },
   reducers: {
     setUserData(state: UserSliceStateType, action: GlobalActionType) {
@@ -18,6 +26,9 @@ const userSlice: Slice = createSlice({
       state.email = action.payload.email;
       state.id = action.payload.id;
       state.token = action.payload.token;
+      state.accounts = action.payload.accounts;
+      state.categories = action.payload.categories;
+      state.currency = action.payload.currency;
     },
   },
 });

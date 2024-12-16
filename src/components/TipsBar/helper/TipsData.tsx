@@ -1,0 +1,17 @@
+export const tipsData: string[] = [
+  "Always track your expenses so you know exactly where your money is going.",
+  "Make sure to set a budget and stick to it to avoid overspending.",
+  "Prioritize saving a portion of your income before spending on anything else.",
+  "Go through your subscriptions and cancel the ones you're not using.",
+  "Plan ahead and save for big purchases instead of buying on impulse.",
+  "Try to cook at home more often; it saves money compared to eating out.",
+  "Pay off high-interest debt quickly to avoid paying more in the long run.",
+  "Set financial goals so you have a clear target to work toward.",
+  "Avoid shopping when you're bored or stressed; it leads to unnecessary spending.",
+  "Use cash for daily expenses to better control your spending habits.",
+  "Create an emergency fund to cover unexpected expenses without stress.",
+  "Compare prices before making a purchase to find the best deal.",
+  "Avoid using credit cards for non-essential items to prevent debt.",
+  "Review your financial goals regularly to stay on track with savings.",
+  "Set aside small amounts consistently, even if it's just a little each month—it adds up!",
+];

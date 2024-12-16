@@ -11,6 +11,29 @@ export interface UserSliceStateType {
   email: string;
   id: string;
   token: string;
+  accounts: {
+    groupName: string;
+    subAccounts: [
+      {
+        amount: number;
+        description: string;
+        name: string;
+        _id: string;
+      }
+    ];
+    _id: string;
+  }[];
+  categories: {
+    categoryName: string;
+    categorySymbol: string;
+    _id: string;
+  }[];
+  currency: {
+    country: string;
+    name: string;
+    symbol: string;
+    _id: string;
+  };
 }
 
 export interface RootState {

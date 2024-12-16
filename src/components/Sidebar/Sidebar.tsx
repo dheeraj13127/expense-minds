@@ -117,7 +117,7 @@ const Sidebar = ({ children }: any) => {
         } sm:translate-x-0`}
       >
         <div className="h-full p-4 overflow-y-auto bg-orange-800 flex flex-col justify-between ">
-          <div>
+          <div className="">
             <div className="flex items-center justify-center ">
               <img src={sidebarLogo} alt="logo" className="" />
             </div>
@@ -158,12 +158,12 @@ const Sidebar = ({ children }: any) => {
                     </p>
                   </div>
                   {activeTab === sm.name && sm.items.length > 0 && (
-                    <ul className="ml-6 mt-2">
+                    <ul className="ml-6 mt-2 ">
                       {sm.items.map((sbm: SidebarSubMenuItems, num: number) => (
                         <li
                           onClick={() => handleNavigateSubMenu(sbm)}
                           key={num}
-                          className={`flex flex-col items-start ${
+                          className={`flex w-44 flex-col items-start ${
                             sbm.name === activeSubTab
                               ? " bg-opacity-50"
                               : " bg-transparent"
@@ -222,7 +222,7 @@ const Sidebar = ({ children }: any) => {
         </div>
       </aside>
 
-      <div className="p-4 sm:ml-64 h-screen sm:-mt-12">
+      <div className="p-4 sm:ml-64 h-full lg:h-screen sm:-mt-12">
         <div className=" ">{children}</div>
       </div>
     </div>

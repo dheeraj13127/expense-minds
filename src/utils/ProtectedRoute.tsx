@@ -1,17 +1,19 @@
 import { Dispatch, useEffect } from "react";
 import { Navigate, NavigateFunction, useNavigate } from "react-router-dom";
-import { getUserProfileURL } from "../url/URL";
+import { getUserCurrencyURL, getUserProfileURL } from "../url/URL";
 
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { UnknownAction } from "redux";
 import { userActions } from "../store/slices/user-slice";
+import toast from "react-hot-toast";
 
 const checkAuthorizedToken = async (
   token: string | null,
   url: string,
   navigate: NavigateFunction,
-  dispatch: Dispatch<UnknownAction>
+  dispatch: Dispatch<UnknownAction>,
+  currencyUrl: string
 ) => {
   try {
     if (!token) {
@@ -23,19 +25,30 @@ const checkAuthorizedToken = async (
       },
     });
     const user = authorizedToken.data.user;
+    const userCurrency = await axios.get(currencyUrl, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
     dispatch(
       userActions.setUserData({
         name: user.name,
         email: user.email,
         id: user._id,
         token,
+        accounts: user.accounts,
+        categories: user.categories,
+        currency: userCurrency.data.currency,
       })
     );
     if (!user) {
+      toast.error("Session time out !");
       navigate("/");
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
-    console.log(err);
+    toast.error("Session time out !");
     navigate("/");
   }
 };
@@ -45,7 +58,13 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    checkAuthorizedToken(token, getUserProfileURL, navigate, dispatch);
+    checkAuthorizedToken(
+      token,
+      getUserProfileURL,
+      navigate,
+      dispatch,
+      getUserCurrencyURL
+    );
   }, [navigate, token, dispatch]);
   return token ? children : <Navigate to="/" replace />;
 };
