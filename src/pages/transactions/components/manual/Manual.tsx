@@ -6,7 +6,10 @@ import {
 import { useState } from "react";
 import TipsBar from "../../../../components/TipsBar/TipsBar";
 import Calculator from "../../../../components/Calculator/Calculator";
-
+import { CircleLoader } from "react-spinners";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { createRecordURL } from "../../../../url/URL";
 const Manual = () => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
@@ -16,6 +19,7 @@ const Manual = () => {
   const [category, setCategory] = useState<string>("");
   const [account, setAccount] = useState<string>("");
   const [note, setNote] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
   const handleSetAmountType = (data: string) => {
     setAmountType(data);
   };
@@ -25,9 +29,50 @@ const Manual = () => {
   const handleSetAccount = (data: string) => {
     setAccount(data);
   };
+  const handleResetData = () => {
+    setAmount("");
+    setCategory("");
+    setAmountType("Expense");
+    setAccount("");
+    setNote("");
+  };
+  const handleSubmit = async () => {
+    if (amount === "" || category === "" || account === "") {
+      setError(true);
+    } else {
+      setError(false);
+      const data = {
+        userId: userDetails.id,
+        amount,
+        category,
+        amountType: amountType.toLocaleLowerCase(),
+        account,
+        note,
+      };
+      handleResetData();
+      try {
+        const res = await axios.post(
+          createRecordURL,
+          {
+            data: data,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + userDetails.token,
+            },
+          }
+        );
+        console.log(res);
+        toast.success("Added successfully !");
+      } catch (err) {
+        console.log(err);
+        toast.error("Something went wrong !");
+      }
+    }
+  };
   return (
     <div>
-      {userDetails.categories.length > 0 && (
+      {userDetails.categories.length > 0 ? (
         <div className="">
           <div className="grid grid-cols-12 lg:px-16 gap-6">
             <div className="col-span-12 lg:col-span-7 2xl:col-span-7 bg-black px-6 py-6 rounded-md">
@@ -68,7 +113,9 @@ const Manual = () => {
                           setAmount(e.target.value)
                         }
                         placeholder="Enter the amount"
-                        className="w-full rounded-tl bg-transparent text-white border border-gray-600 rounded-bl px-2 py-1 font-inter outline-none"
+                        className={`w-full rounded-tl bg-transparent text-white border ${
+                          error ? "border-red-600 " : "border-gray-600 "
+                        } rounded-bl px-2 py-1 font-inter outline-none`}
                       />
                       <div className="py-2 px-2 text-white rounded-tr rounded-br bg-zinc-800 font-inter text-sm">
                         {userDetails?.currency.symbol}
@@ -81,7 +128,11 @@ const Manual = () => {
                     </label>
                     <div className="flex items-center">
                       <div className="w-full rounded border border-gray-600 px-2 py-5 space-y-3">
-                        <div className="border border-gray-600 px-2 py-2 h-10  rounded text-white font-inter">
+                        <div
+                          className={`border ${
+                            error ? "border-red-600 " : "border-gray-600 "
+                          } px-2 py-2 h-10  rounded text-white font-inter`}
+                        >
                           {category}
                         </div>
                         <div className="flex items-center flex-wrap h-20 overflow-y-auto">
@@ -118,7 +169,11 @@ const Manual = () => {
                     </label>
                     <div className="flex items-center">
                       <div className="w-full rounded border border-gray-600 px-2 py-5 space-y-3">
-                        <div className="border border-gray-600 px-2 py-2 h-10  rounded text-white font-inter">
+                        <div
+                          className={`border ${
+                            error ? "border-red-600 " : "border-gray-600 "
+                          } px-2 py-2 h-10  rounded text-white font-inter`}
+                        >
                           {account}
                         </div>
                         <div className="flex items-center flex-wrap h-10 overflow-y-auto">
@@ -173,7 +228,10 @@ const Manual = () => {
                     </div>
                   </div>
                   <div className="space-y-2 flex items-center justify-center">
-                    <button className=" text-white font-inter bg-orange-800 px-4 py-1 rounded">
+                    <button
+                      onClick={handleSubmit}
+                      className=" text-white font-inter bg-orange-800 px-4 py-1 rounded"
+                    >
                       Add
                     </button>
                   </div>
@@ -184,6 +242,12 @@ const Manual = () => {
               <TipsBar />
               <Calculator />
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className=" flex justify-center   items-center ">
+          <div className=" my-80">
+            <CircleLoader color="#fff" />
           </div>
         </div>
       )}

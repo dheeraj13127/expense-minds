@@ -52,3 +52,16 @@ export interface SideBarMenuItemsType {
   icon: ReactNode;
   items: SidebarSubMenuItems[];
 }
+
+export interface RecordType {
+  account: string;
+  amount: number;
+  amountType: string;
+  category: string;
+  createdAt: string;
+  note: string;
+  userId: string;
+  _id: string;
+  _v: number;
+  updatedAt: string;
+}

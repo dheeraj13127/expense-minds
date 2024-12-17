@@ -32,7 +32,7 @@ const Calculator: React.FC = () => {
               <button
                 key={item}
                 onClick={() => handleClick(item)}
-                className="bg-gray-300 p-1  rounded-lg hover:bg-gray-400"
+                className="bg-gray-300 p-1 rounded-lg hover:bg-gray-400"
               >
                 {item}
               </button>
