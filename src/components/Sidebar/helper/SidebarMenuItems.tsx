@@ -9,7 +9,7 @@ import { MdCategory, MdOutlineAccountBalanceWallet } from "react-icons/md";
 export const sideBarMenuItems: SideBarMenuItemsType[] = [
   {
     name: "records",
-    url: "/dashboard/records",
+    url: "/dashboard/records/daily",
     icon: <BsCollectionFill />,
     items: [],
   },

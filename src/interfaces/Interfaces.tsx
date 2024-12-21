@@ -1,9 +1,17 @@
+import dayjs from "dayjs";
 import { ReactNode } from "react";
 
 export interface GlobalActionType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any;
   type: string;
+}
+export interface CalendarType {
+  calView: string;
+  daysView: boolean;
+  monthsView: boolean;
+  setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
+  result: dayjs.Dayjs;
 }
 
 export interface UserSliceStateType {
@@ -58,10 +66,40 @@ export interface RecordType {
   amount: number;
   amountType: string;
   category: string;
-  createdAt: string;
   note: string;
-  userId: string;
   _id: string;
-  _v: number;
-  updatedAt: string;
+}
+export interface RecordsDataType {
+  totalExpenseSum: number;
+  totalIncomeSum: number;
+  netTotal: number;
+  data: {
+    _id: string;
+    expense: number;
+    income: number;
+    records: {
+      _id: string;
+      amount: number;
+      category: string;
+      amountType: string;
+      account: string;
+      note: string;
+    }[];
+  }[];
+}
+
+export interface StatsBarType {
+  income: number;
+  expense: number;
+  total: number;
+}
+
+export interface FilterBarType {
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface FilterBarDataType {
+  id: number;
+  name: string;
+  value: string;
 }

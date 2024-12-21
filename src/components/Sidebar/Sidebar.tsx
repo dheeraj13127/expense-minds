@@ -29,7 +29,7 @@ const Sidebar = ({ children }: any) => {
 
   const routes = useMemo(
     () => [
-      "/dashboard/records",
+      "/dashboard/records/daily",
       "/dashboard/transactions/manual",
       "/dashboard/transactions/automated",
       "/dashboard/statistics",
@@ -53,7 +53,7 @@ const Sidebar = ({ children }: any) => {
 
   useEffect(() => {
     const matchedRoute = routes.find((el: string) => matchPath(el, pathname));
-    if (matchedRoute === "/dashboard/records") {
+    if (matchedRoute === "/dashboard/records/daily") {
       setActiveTab("records");
       setActiveSubTab("");
     } else if (matchedRoute === "/dashboard/transactions/manual") {

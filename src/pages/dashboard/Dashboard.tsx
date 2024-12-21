@@ -11,7 +11,7 @@ const Dashboard = () => {
   return (
     <div>
       <Routes>
-        <Route path="/records" element={<Records />} />
+        <Route path="/records/*" element={<Records />} />
         <Route path="/transactions/*" element={<Transactions />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/tools" element={<Tools />} />
