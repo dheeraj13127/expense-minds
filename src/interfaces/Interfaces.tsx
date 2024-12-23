@@ -6,12 +6,18 @@ export interface GlobalActionType {
   payload: any;
   type: string;
 }
+
+export interface CalendarBarType {
+  daysView: boolean;
+  monthsView: boolean;
+}
 export interface CalendarType {
   calView: string;
   daysView: boolean;
   monthsView: boolean;
   setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
   result: dayjs.Dayjs;
+  setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface UserSliceStateType {
@@ -94,12 +100,8 @@ export interface StatsBarType {
   total: number;
 }
 
-export interface FilterBarType {
-  setFilter: React.Dispatch<React.SetStateAction<string>>;
-}
-
 export interface FilterBarDataType {
   id: number;
   name: string;
-  value: string;
+  url: string;
 }

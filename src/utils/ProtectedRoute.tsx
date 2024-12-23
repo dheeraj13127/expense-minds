@@ -43,12 +43,12 @@ const checkAuthorizedToken = async (
       })
     );
     if (!user) {
-      toast.error("Session time out !");
+      toast.error("Session expired !");
       navigate("/");
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
-    toast.error("Session time out !");
+    toast.error("Session expired !");
     navigate("/");
   }
 };

@@ -8,6 +8,7 @@ const Calendar = ({
   monthsView,
   setResult,
   result,
+  setShowCalendar,
 }: CalendarType) => {
   const [view, setView] = useState<string>(calView);
 
@@ -55,6 +56,8 @@ const Calendar = ({
     setResult(result.month(monthIndex));
     if (daysView) {
       setView("days");
+    } else {
+      setShowCalendar(false);
     }
   };
 
@@ -68,7 +71,12 @@ const Calendar = ({
   };
 
   return (
-    <div className="p-5 mx-auto max-w-md bg-slate-700 rounded">
+    <div className="p-5 mx-auto max-w-md bg-slate-700 rounded border-2 border-white border-opacity-15">
+      <div className="my-2 ">
+        <p className="text-white text-center text-[10px]">
+          Powered by ExpenseMinds
+        </p>
+      </div>
       <div className="flex justify-between items-center mb-5">
         <button
           onClick={prevHandler}
@@ -107,10 +115,10 @@ const Calendar = ({
       </div>
 
       {view === "days" && (
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-1">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
             (day, index) => (
-              <div key={index} className="text-center font-bold">
+              <div key={index} className="text-center font-bold text-white">
                 {day}
               </div>
             )
@@ -119,8 +127,10 @@ const Calendar = ({
           {generateCalendarDays(result).map((day, index) => (
             <div
               key={index}
-              className={`p-2 rounded w-full flex items-center justify-center ${
-                day ? "bg-gray-100" : "bg-transparent"
+              className={`p-2 rounded w-full flex text-white items-center justify-center ${
+                day === dayjs().date() && result.month() === dayjs().month()
+                  ? "bg-gray-800"
+                  : "bg-transparent"
               }`}
             >
               {day && <span className="text-sm font-medium">{day}</span>}

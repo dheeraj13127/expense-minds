@@ -14,7 +14,7 @@ const Landing = () => {
       localStorage.setItem("token", res.data.userToken);
       toast.success(res.data.message);
       if (res.status === 200) {
-        navigate("/dashboard/records");
+        navigate("/dashboard/records/daily");
       }
     } catch (err) {
       console.log(err);
