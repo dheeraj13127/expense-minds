@@ -71,7 +71,7 @@ const Manual = () => {
     }
   };
   return (
-    <div>
+    <div className=" my-16">
       {userDetails.categories.length > 0 ? (
         <div className="">
           <div className="grid grid-cols-12 lg:px-16 gap-6">
@@ -146,7 +146,7 @@ const Manual = () => {
                                 className="m-2 cursor-pointer"
                                 onClick={() =>
                                   handleSetCategory(
-                                    cat.categoryName + " " + cat.categorySymbol
+                                    cat.categorySymbol + " " + cat.categoryName
                                   )
                                 }
                               >

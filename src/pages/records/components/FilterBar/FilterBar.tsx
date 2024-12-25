@@ -40,7 +40,7 @@ const FilterBar = () => {
     setActiveTab(value.name);
   };
   return (
-    <div className="bg-black border-b border-white border-opacity-50 px-2 pt-2 flex items-center justify-around space-x-6">
+    <div className="bg-black border-b rounded-t border-white border-opacity-50 px-2 pt-2 flex items-center justify-around space-x-6">
       {filterBarData.map((fil: FilterBarDataType, key: number) => (
         <div
           key={key}

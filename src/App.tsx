@@ -8,13 +8,13 @@ import Error from "./pages/error/Error";
 
 const App = () => {
   return (
-    <div>
+    <div className="">
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route
           path="/dashboard/*"
           element={
-            <div className=" bg-zinc-800">
+            <div className=" bg-zinc-800 h-screen">
               <ProtectedRoute>
                 <Sidebar>
                   <Dashboard />

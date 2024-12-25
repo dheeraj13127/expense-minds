@@ -2,6 +2,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { CalendarType } from "../../interfaces/Interfaces";
+import { IoCloseCircleSharp } from "react-icons/io5";
 const Calendar = ({
   calView,
   daysView,
@@ -9,6 +10,7 @@ const Calendar = ({
   setResult,
   result,
   setShowCalendar,
+  setMonthsActive,
 }: CalendarType) => {
   const [view, setView] = useState<string>(calView);
 
@@ -57,6 +59,7 @@ const Calendar = ({
     if (daysView) {
       setView("days");
     } else {
+      setMonthsActive(true);
       setShowCalendar(false);
     }
   };
@@ -69,9 +72,19 @@ const Calendar = ({
       setView("days");
     }
   };
-
+  const handleCloseCalendar = () => {
+    setShowCalendar(false);
+  };
   return (
-    <div className="p-5 mx-auto max-w-md bg-slate-700 rounded border-2 border-white border-opacity-15">
+    <div className="p-5 mx-auto relative max-w-md bg-slate-700 rounded border-2 border-white border-opacity-15">
+      <div className="absolute -top-2 -right-3">
+        <button
+          onClick={handleCloseCalendar}
+          className="bg-white p-1 rounded-full flex items-center"
+        >
+          <IoCloseCircleSharp />
+        </button>
+      </div>
       <div className="my-2 ">
         <p className="text-white text-center text-[10px]">
           Powered by ExpenseMinds

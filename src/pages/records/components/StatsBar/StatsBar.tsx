@@ -2,7 +2,7 @@ import { StatsBarType } from "../../../../interfaces/Interfaces";
 
 const StatsBar = ({ income, expense, total }: StatsBarType) => {
   return (
-    <div className="bg-zinc-700 flex items-center justify-around px-1 py-2 rounde">
+    <div className="bg-zinc-700 flex items-center justify-around px-1 py-2 rounded-b">
       <div className=" flex items-center flex-col">
         <p className="text-white font-inter font-medium text-base sm:text-lg">
           Income

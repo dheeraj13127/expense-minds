@@ -10,6 +10,9 @@ export interface GlobalActionType {
 export interface CalendarBarType {
   daysView: boolean;
   monthsView: boolean;
+  setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
+  result: dayjs.Dayjs;
+  handleFetchNewRecords: () => void;
 }
 export interface CalendarType {
   calView: string;
@@ -18,6 +21,7 @@ export interface CalendarType {
   setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
   result: dayjs.Dayjs;
   setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
+  setMonthsActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface UserSliceStateType {
@@ -50,8 +54,16 @@ export interface UserSliceStateType {
   };
 }
 
+export interface RecordsSliceType {
+  income: number;
+  expense: number;
+  total: number;
+  recordsData: RecordsDataType["data"];
+}
+
 export interface RootState {
   user: UserSliceStateType;
+  records: RecordsSliceType;
 }
 
 export interface SidebarSubMenuItems {
@@ -104,4 +116,7 @@ export interface FilterBarDataType {
   id: number;
   name: string;
   url: string;
+}
+export interface IndividualRecordType {
+  rdData: RecordsDataType["data"][0];
 }

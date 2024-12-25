@@ -222,7 +222,7 @@ const Sidebar = ({ children }: any) => {
         </div>
       </aside>
 
-      <div className="p-4 sm:ml-64 h-full lg:h-screen sm:-mt-12">
+      <div className="p-4 sm:ml-64 bg-zinc-800 sm:-mt-12">
         <div className=" ">{children}</div>
       </div>
     </div>
