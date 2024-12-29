@@ -13,6 +13,7 @@ export interface CalendarBarType {
   setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
   result: dayjs.Dayjs;
   handleFetchNewRecords: () => void;
+  calView: string;
 }
 export interface CalendarType {
   calView: string;
@@ -21,7 +22,8 @@ export interface CalendarType {
   setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
   result: dayjs.Dayjs;
   setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
-  setMonthsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setMonthsActive?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  setYearsActive?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
 }
 
 export interface UserSliceStateType {

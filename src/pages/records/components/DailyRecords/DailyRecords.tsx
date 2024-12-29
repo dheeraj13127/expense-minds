@@ -91,6 +91,7 @@ const DailyRecords = () => {
       <div className="col-span-12">
         <FilterBar />
         <CalenderBar
+          calView="months"
           monthsView={true}
           daysView={false}
           result={result}

@@ -11,6 +11,7 @@ const Calendar = ({
   result,
   setShowCalendar,
   setMonthsActive,
+  setYearsActive,
 }: CalendarType) => {
   const [view, setView] = useState<string>(calView);
 
@@ -59,7 +60,7 @@ const Calendar = ({
     if (daysView) {
       setView("days");
     } else {
-      setMonthsActive(true);
+      setMonthsActive?.(true);
       setShowCalendar(false);
     }
   };
@@ -69,6 +70,8 @@ const Calendar = ({
     if (monthsView) {
       setView("months");
     } else {
+      setYearsActive?.(true);
+      setShowCalendar(false);
       setView("days");
     }
   };

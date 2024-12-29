@@ -12,7 +12,7 @@ const IndividualRecord = ({ rdData }: IndividualRecordType) => {
   return (
     <div>
       <div className="bg-black rounded py-3">
-        <div className="px-3 flex items-center justify-between border-b-2 border-white border-opacity-50 py-2">
+        <div className="px-3 flex items-center justify-between border-b-2 border-white border-opacity-20 py-2">
           <p className="text-white font-inter text-xs rounded px-1 py-0.5 bg-primary-green">
             {rdData._id}
           </p>
@@ -40,7 +40,13 @@ const IndividualRecord = ({ rdData }: IndividualRecordType) => {
                 <p className="text-gray-300 capitalize col-span-2 sm:col-span-1  text-xs sm:text-sm font-poppins justify-self-center sm:justify-self-start">
                   {record.account}
                 </p>
-                <p className="text-gray-300 text-xs sm:text-sm font-poppins sm:col-span-2 justify-self-end">
+                <p
+                  className={`${
+                    record.amountType === "expense"
+                      ? "text-blue-500"
+                      : " text-orange-700"
+                  }  text-xs sm:text-sm font-poppins sm:col-span-2 justify-self-end`}
+                >
                   {userDetails && userDetails.currency.symbol}{" "}
                   {record.amount.toFixed(2)}
                 </p>
