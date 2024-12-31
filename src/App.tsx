@@ -14,7 +14,7 @@ const App = () => {
         <Route
           path="/dashboard/*"
           element={
-            <div className=" bg-zinc-800 h-screen">
+            <div className=" bg-zinc-800 h-screen scroll-smooth">
               <ProtectedRoute>
                 <Sidebar>
                   <Dashboard />

@@ -10,6 +10,7 @@ import IndividualRecord from "./components/IndividualRecors/IndividualRecord";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { recordsActions } from "../../../../store/slices/records-slice";
+import UpdateRecord from "../UpdateRecord/UpdateRecord";
 
 const DailyRecords = () => {
   const income: number = useSelector<RootState, number>(
@@ -28,7 +29,21 @@ const DailyRecords = () => {
 
   const dispatch = useDispatch();
   const [result, setResult] = useState<dayjs.Dayjs>(dayjs());
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (showUpdateModal) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [showUpdateModal]);
+
   const fetchRecordsByDay = useCallback(async () => {
     const recordsData = await axios.get(
       `${getRecordsByDayURL}?day=${dayjs().year()}-${dayjs().month() + 1}`,
@@ -88,7 +103,7 @@ const DailyRecords = () => {
   };
   return (
     <div className="">
-      <div className="col-span-12">
+      <div className="col-span-12 relative">
         <FilterBar />
         <CalenderBar
           calView="months"
@@ -99,11 +114,17 @@ const DailyRecords = () => {
           handleFetchNewRecords={handleFetchNewRecords}
         />
         <StatsBar income={income} expense={expense} total={total} />
+        {showUpdateModal && (
+          <UpdateRecord setShowUpdateModal={setShowUpdateModal} />
+        )}
         {recordsData && recordsData.length > 0 ? (
           <div className="my-10 space-y-10">
             {recordsData.map((rd: RecordsDataType["data"][0], key: number) => (
               <div key={key}>
-                <IndividualRecord rdData={rd} />
+                <IndividualRecord
+                  setShowUpdateModal={setShowUpdateModal}
+                  rdData={rd}
+                />
               </div>
             ))}
           </div>

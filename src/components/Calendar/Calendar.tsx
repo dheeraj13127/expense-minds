@@ -90,7 +90,7 @@ const Calendar = ({
       </div>
       <div className="my-2 ">
         <p className="text-white text-center text-[10px]">
-          Powered by ExpenseMinds
+          Powered by <span className=" font-semibold">ExpenseMinds</span>
         </p>
       </div>
       <div className="flex justify-between items-center mb-5">

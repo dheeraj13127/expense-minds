@@ -61,9 +61,11 @@ export interface RecordsSliceType {
   expense: number;
   total: number;
   recordsData: RecordsDataType["data"];
+  toBeUpdatedRecord: RecordType;
 }
 
 export interface RootState {
+  state: any;
   user: UserSliceStateType;
   records: RecordsSliceType;
 }
@@ -121,4 +123,9 @@ export interface FilterBarDataType {
 }
 export interface IndividualRecordType {
   rdData: RecordsDataType["data"][0];
+  setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface UpdateRecordType {
+  setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
 }

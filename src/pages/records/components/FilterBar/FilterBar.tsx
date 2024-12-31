@@ -10,7 +10,6 @@ const FilterBar = () => {
     () => [
       "/dashboard/records/daily",
       "/dashboard/records/monthly",
-      "/dashboard/records/calendar",
       "/dashboard/records/summary",
     ],
     []
@@ -19,7 +18,6 @@ const FilterBar = () => {
   const filterBarData: FilterBarDataType[] = [
     { id: 1, name: "daily", url: "/dashboard/records/daily" },
     { id: 1, name: "monthly", url: "/dashboard/records/monthly" },
-    { id: 1, name: "calendar", url: "/dashboard/records/calendar" },
     { id: 1, name: "summary", url: "/dashboard/records/summary" },
   ];
   useEffect(() => {
@@ -28,8 +26,6 @@ const FilterBar = () => {
       setActiveTab("daily");
     } else if (matchedRoute === "/dashboard/records/monthly") {
       setActiveTab("monthly");
-    } else if (matchedRoute === "/dashboard/records/calendar") {
-      setActiveTab("calendar");
     } else if (matchedRoute === "/dashboard/records/summary") {
       setActiveTab("summary");
     }

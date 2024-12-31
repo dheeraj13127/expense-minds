@@ -11,7 +11,16 @@ const recordsSlice: Slice = createSlice({
     expense: 0,
     total: 0,
     recordsData: [],
+    toBeUpdatedRecord: {
+      account: "",
+      amount: 0,
+      amountType: "",
+      category: "",
+      note: "",
+      _id: "",
+    },
   },
+
   reducers: {
     setRecordsDataAndState(state: RecordsSliceType, action: GlobalActionType) {
       state.income = action.payload.income;
@@ -27,6 +36,9 @@ const recordsSlice: Slice = createSlice({
       state.expense = action.payload.expense;
       state.total = action.payload.total;
       state.recordsData = action.payload.recordsData;
+    },
+    setToBeUpdatedRecord(state: RecordsSliceType, action: GlobalActionType) {
+      state.toBeUpdatedRecord = action.payload.toBeUpdatedRecord;
     },
   },
 });
