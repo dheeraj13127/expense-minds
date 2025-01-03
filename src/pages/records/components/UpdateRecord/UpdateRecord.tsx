@@ -6,14 +6,21 @@ import {
   UserSliceStateType,
 } from "../../../../interfaces/Interfaces";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { deleteRecordURL, updateRecordURL } from "../../../../url/URL";
+import toast from "react-hot-toast";
+import { recordsActions } from "../../../../store/slices/records-slice";
 
-const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
+const UpdateRecord = ({ setShowUpdateModal, recordType }: UpdateRecordType) => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
   );
   const toBeUpdatedRecord: RecordType = useSelector<RootState, RecordType>(
     (state) => state.records.toBeUpdatedRecord
+  );
+  const parentRecordId: string = useSelector<RootState, string>(
+    (state) => state.records.parentRecordId
   );
 
   const [amount, setAmount] = useState<string>(
@@ -26,6 +33,7 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
   const [account, setAccount] = useState<string>(toBeUpdatedRecord?.account);
   const [note, setNote] = useState<string>(toBeUpdatedRecord?.note);
   const [error, setError] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const handleCloseModal = () => {
     setShowUpdateModal(false);
   };
@@ -38,40 +46,79 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
   const handleSetAccount = (data: string) => {
     setAccount(data);
   };
-  const handleSubmit = async () => {
+  const handleUpdate = async () => {
     if (amount === "" || category === "" || account === "") {
       setError(true);
     } else {
       setError(false);
       const data = {
-        userId: userDetails.id,
+        _id: toBeUpdatedRecord._id,
         amount,
         category,
         amountType: amountType.toLocaleLowerCase(),
         account,
         note,
+        recordType,
       };
-      //   handleResetData();
-      //   try {
-      //     const res = await axios.post(
-      //       createRecordURL,
-      //       {
-      //         data: data,
-      //       },
-      //       {
-      //         headers: {
-      //           Authorization: "Bearer " + userDetails.token,
-      //         },
-      //       }
-      //     );
-      //     console.log(res);
-      //     toast.success("Added successfully !");
-      //   } catch (err) {
-      //     console.log(err);
-      //     toast.error("Something went wrong !");
-      //   }
+      try {
+        const res = await axios.put(
+          updateRecordURL,
+          {
+            data: data,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + userDetails.token,
+            },
+          }
+        );
+        setShowUpdateModal(false);
+        const result = res.data.records;
+
+        dispatch(
+          recordsActions.updateRecordsData({
+            income: result.totalIncomeSum,
+            expense: result.totalExpenseSum,
+            total: result.netTotal,
+            recordsData: result.data[0],
+          })
+        );
+        toast.success("Updated successfully !");
+      } catch (err) {
+        console.log(err);
+        toast.error("Something went wrong !");
+      }
     }
   };
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(
+        `${deleteRecordURL}?id=${toBeUpdatedRecord._id}&recordType=${recordType}`,
+        {
+          headers: {
+            Authorization: "Bearer " + userDetails.token,
+          },
+        }
+      );
+      setShowUpdateModal(false);
+      const result = res.data.records;
+
+      dispatch(
+        recordsActions.deleteRecordsData({
+          income: result.totalIncomeSum,
+          expense: result.totalExpenseSum,
+          total: result.netTotal,
+          recordsData: result.data,
+          parentRecordId: parentRecordId,
+        })
+      );
+      toast.success("Deleted successfully !");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong !");
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-40 flex px-4 justify-center items-center z-50">
       <div className="bg-slate-700 relative border-2 border-white border-opacity-10 rounded-lg p-6 max-w-2xl w-full">
@@ -110,7 +157,10 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
 
             <div className="mt-10 space-y-4">
               <div className="space-y-2 ">
-                <label htmlFor="amount" className="text-white font-inter">
+                <label
+                  htmlFor="amount"
+                  className="text-white font-inter text-sm sm:text-base"
+                >
                   Amount
                 </label>
                 <div className="flex items-center">
@@ -131,7 +181,10 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
                 </div>
               </div>
               <div className="space-y-2 ">
-                <label htmlFor="amount" className="text-white font-inter">
+                <label
+                  htmlFor="amount"
+                  className="text-white font-inter text-sm sm:text-base"
+                >
                   Category
                 </label>
                 <div className="flex items-center">
@@ -139,7 +192,7 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
                     <div
                       className={`border ${
                         error ? "border-red-600 " : "border-gray-500 "
-                      } px-2 py-2 h-10  rounded text-white font-inter`}
+                      } px-2 py-2 h-10  rounded text-white font-inter text-sm sm:text-base`}
                     >
                       {category}
                     </div>
@@ -172,7 +225,10 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
                 </div>
               </div>
               <div className="space-y-2 ">
-                <label htmlFor="amount" className="text-white font-inter">
+                <label
+                  htmlFor="amount"
+                  className="text-white font-inter text-sm sm:text-base"
+                >
                   Account
                 </label>
                 <div className="flex items-center">
@@ -180,7 +236,7 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
                     <div
                       className={`border ${
                         error ? "border-red-600 " : "border-gray-500 "
-                      } px-2 py-2 h-10  rounded text-white font-inter`}
+                      } px-2 py-2 h-10  rounded text-white font-inter text-sm sm:text-base`}
                     >
                       {account}
                     </div>
@@ -218,7 +274,10 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="amount" className="text-white font-inter">
+                <label
+                  htmlFor="amount"
+                  className="text-white font-inter text-sm sm:text-base"
+                >
                   Note
                 </label>
                 <div className="">
@@ -229,22 +288,22 @@ const UpdateRecord = ({ setShowUpdateModal }: UpdateRecordType) => {
                       setNote(e.target.value)
                     }
                     placeholder="Enter the details"
-                    className="w-full rounded-tl bg-transparent text-white border border-gray-500 rounded-bl px-2 py-1 font-inter outline-none"
+                    className="w-full rounded-tl bg-transparent text-white border border-gray-500 rounded-bl px-2 py-1 font-inter text-sm sm:text-base outline-none"
                   />
                 </div>
               </div>
               <div className=" flex items-center justify-center space-x-2 w-full">
-                <div>
+                <div className=" w-full">
                   <button
-                    onClick={handleSubmit}
+                    onClick={handleDelete}
                     className=" w-full text-black text-sm font-inter font-medium bg-white px-4 py-1 rounded"
                   >
-                    Update
+                    Delete
                   </button>
                 </div>
-                <div>
+                <div className="w-full">
                   <button
-                    onClick={handleSubmit}
+                    onClick={handleUpdate}
                     className="w-full text-black text-sm font-inter font-medium bg-white px-4 py-1 rounded"
                   >
                     Update

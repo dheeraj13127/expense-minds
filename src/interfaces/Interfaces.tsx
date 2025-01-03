@@ -62,10 +62,10 @@ export interface RecordsSliceType {
   total: number;
   recordsData: RecordsDataType["data"];
   toBeUpdatedRecord: RecordType;
+  parentRecordId: string;
 }
 
 export interface RootState {
-  state: any;
   user: UserSliceStateType;
   records: RecordsSliceType;
 }
@@ -128,4 +128,5 @@ export interface IndividualRecordType {
 
 export interface UpdateRecordType {
   setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
+  recordType: string;
 }

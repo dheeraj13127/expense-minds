@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   IndividualRecordType,
   RecordType,
@@ -6,10 +6,29 @@ import {
   UserSliceStateType,
 } from "../../../../../../interfaces/Interfaces";
 import { monthsData } from "../helper/MonthsData";
-const IndividualRecords = ({ rdData }: IndividualRecordType) => {
+import { recordsActions } from "../../../../../../store/slices/records-slice";
+const IndividualRecords = ({
+  rdData,
+  setShowUpdateModal,
+}: IndividualRecordType) => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
   );
+  const dispatch = useDispatch();
+  const handleUpdateRecord = (record: RecordType, parentRecordId: string) => {
+    dispatch(
+      recordsActions.setToBeUpdatedRecord({
+        toBeUpdatedRecord: record,
+      })
+    );
+    dispatch(
+      recordsActions.setParentRecordId({
+        parentRecordId: parentRecordId,
+      })
+    );
+
+    setShowUpdateModal(true);
+  };
   return (
     <div>
       <div className="bg-black rounded py-3">
@@ -35,6 +54,7 @@ const IndividualRecords = ({ rdData }: IndividualRecordType) => {
                 <div
                   key={key}
                   className=" hover:bg-zinc-800 p-1 cursor-pointer duration-100 rounded"
+                  onClick={() => handleUpdateRecord(record, rdData._id)}
                 >
                   <div className="grid grid-cols-4">
                     <p className="text-gray-300 text-xs sm:text-sm font-poppins">

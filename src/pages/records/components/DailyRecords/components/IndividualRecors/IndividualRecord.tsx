@@ -15,12 +15,18 @@ const IndividualRecord = ({
     (state) => state.user
   );
 
-  const handleUpdateRecord = (record: RecordType) => {
+  const handleUpdateRecord = (record: RecordType, parentRecordId: string) => {
     dispatch(
       recordsActions.setToBeUpdatedRecord({
         toBeUpdatedRecord: record,
       })
     );
+    dispatch(
+      recordsActions.setParentRecordId({
+        parentRecordId: parentRecordId,
+      })
+    );
+
     setShowUpdateModal(true);
   };
   return (
@@ -46,7 +52,7 @@ const IndividualRecord = ({
             <div
               key={key}
               className=" hover:bg-zinc-800 p-1 cursor-pointer duration-100 rounded"
-              onClick={() => handleUpdateRecord(record)}
+              onClick={() => handleUpdateRecord(record, rdData._id)}
             >
               <div className="grid grid-cols-4">
                 <p className="text-gray-300 text-xs sm:text-sm font-poppins">

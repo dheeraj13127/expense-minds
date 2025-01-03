@@ -10,6 +10,7 @@ import IndividualRecords from "./components/IndividualRecords/IndividualRecords"
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { recordsActions } from "../../../../store/slices/records-slice";
+import UpdateRecord from "../UpdateRecord/UpdateRecord";
 
 const MonthlyRecords = () => {
   const income: number = useSelector<RootState, number>(
@@ -25,8 +26,20 @@ const MonthlyRecords = () => {
     RootState,
     RecordsDataType["data"]
   >((state) => state.records.recordsData);
-
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (showUpdateModal) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [showUpdateModal]);
   const [result, setResult] = useState<dayjs.Dayjs>(dayjs());
   const token = localStorage.getItem("token");
   const fetchRecordsByMonth = useCallback(async () => {
@@ -43,10 +56,10 @@ const MonthlyRecords = () => {
 
     dispatch(
       recordsActions.setRecordsDataAndState({
-        income: data.totalIncomeSum,
-        expense: data.totalExpenseSum,
-        total: data.netTotal,
-        recordsData: data.data,
+        income: data ? data.totalIncomeSum : 0,
+        expense: data ? data.totalExpenseSum : 0,
+        total: data ? data.netTotal : 0,
+        recordsData: data ? data.data : [],
       })
     );
   }, [token, dispatch]);
@@ -103,11 +116,20 @@ const MonthlyRecords = () => {
           handleFetchNewRecords={handleFetchNewRecords}
         />
         <StatsBar income={income} expense={expense} total={total} />
+        {showUpdateModal && (
+          <UpdateRecord
+            setShowUpdateModal={setShowUpdateModal}
+            recordType="monthly"
+          />
+        )}
         {recordsData && recordsData.length > 0 ? (
           <div className="my-10 space-y-10">
             {recordsData.map((rd: RecordsDataType["data"][0], key: number) => (
               <div key={key}>
-                <IndividualRecords rdData={rd} />
+                <IndividualRecords
+                  setShowUpdateModal={setShowUpdateModal}
+                  rdData={rd}
+                />
               </div>
             ))}
           </div>

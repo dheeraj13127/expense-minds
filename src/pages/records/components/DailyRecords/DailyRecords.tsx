@@ -46,7 +46,7 @@ const DailyRecords = () => {
 
   const fetchRecordsByDay = useCallback(async () => {
     const recordsData = await axios.get(
-      `${getRecordsByDayURL}?day=${dayjs().year()}-${dayjs().month() + 1}`,
+      `${getRecordsByDayURL}?day=${dayjs().year()}-${dayjs().format("MM")}`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -55,12 +55,13 @@ const DailyRecords = () => {
     );
 
     const data = recordsData.data.result[0];
+
     dispatch(
       recordsActions.setRecordsDataAndState({
-        income: data.totalIncomeSum,
-        expense: data.totalExpenseSum,
-        total: data.netTotal,
-        recordsData: data.data,
+        income: data ? data.totalIncomeSum : 0,
+        expense: data ? data.totalExpenseSum : 0,
+        total: data ? data.netTotal : 0,
+        recordsData: data ? data.data : [],
       })
     );
   }, [token, dispatch]);
@@ -70,7 +71,7 @@ const DailyRecords = () => {
 
   const handleFetchNewRecords = async () => {
     try {
-      const data = result.year() + "-" + (result.month() + 1);
+      const data = result.year() + "-" + result.format("MM");
       const recordsData = await axios.get(`${getRecordsByDayURL}?day=${data}`, {
         headers: {
           Authorization: "Bearer " + token,
@@ -115,7 +116,10 @@ const DailyRecords = () => {
         />
         <StatsBar income={income} expense={expense} total={total} />
         {showUpdateModal && (
-          <UpdateRecord setShowUpdateModal={setShowUpdateModal} />
+          <UpdateRecord
+            setShowUpdateModal={setShowUpdateModal}
+            recordType="daily"
+          />
         )}
         {recordsData && recordsData.length > 0 ? (
           <div className="my-10 space-y-10">

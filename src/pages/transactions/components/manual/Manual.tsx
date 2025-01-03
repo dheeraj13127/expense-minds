@@ -51,7 +51,7 @@ const Manual = () => {
       };
       handleResetData();
       try {
-        const res = await axios.post(
+        await axios.post(
           createRecordURL,
           {
             data: data,
@@ -62,7 +62,7 @@ const Manual = () => {
             },
           }
         );
-        console.log(res);
+
         toast.success("Added successfully !");
       } catch (err) {
         console.log(err);

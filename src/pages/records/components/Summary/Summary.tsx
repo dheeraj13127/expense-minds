@@ -31,7 +31,7 @@ const Summary = () => {
   const token = localStorage.getItem("token");
   const fetchRecordsByDay = useCallback(async () => {
     const recordsData = await axios.get(
-      `${getRecordsBySummaryURL}?day=${dayjs().year()}-${dayjs().month() + 1}`,
+      `${getRecordsBySummaryURL}?day=${dayjs().year()}-${dayjs().format("MM")}`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -55,7 +55,7 @@ const Summary = () => {
 
   const handleFetchNewRecords = async () => {
     try {
-      const data = result.year() + "-" + (result.month() + 1);
+      const data = result.year() + "-" + result.format("MM");
       const recordsData = await axios.get(
         `${getRecordsBySummaryURL}?day=${data}`,
         {
