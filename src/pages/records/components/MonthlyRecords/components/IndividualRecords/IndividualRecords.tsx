@@ -27,7 +27,7 @@ const IndividualRecords = ({
       })
     );
 
-    setShowUpdateModal(true);
+    setShowUpdateModal?.(true);
   };
   return (
     <div>

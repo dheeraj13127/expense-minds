@@ -123,7 +123,7 @@ export interface FilterBarDataType {
 }
 export interface IndividualRecordType {
   rdData: RecordsDataType["data"][0];
-  setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowUpdateModal?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface UpdateRecordType {
