@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import sidebarLogo from "../../assets/em-logo.png";
 import { MdOutlineSubject } from "react-icons/md";
 
@@ -83,14 +83,16 @@ const Sidebar = ({ children }: any) => {
     setActiveTab(item.name);
   };
 
-  const handleNavigateSubMenu = (item: SidebarSubMenuItems): void => {
+  const handleNavigateSubMenu = (
+    item: SidebarSubMenuItems,
+    parent: SideBarMenuItemsType
+  ): void => {
     setNavActive(false);
     navigate(item.url);
-    setActiveTab(item.name);
+    setActiveTab(parent.name);
+    setActiveSubTab(item.name);
   };
-  const handleActivateSubMenu = (item: SideBarMenuItemsType): void => {
-    setActiveTab(item.name);
-  };
+
   const handleNavigateProfile = () => {
     setNavActive(false);
     navigate("/dashboard/profile");
@@ -125,11 +127,7 @@ const Sidebar = ({ children }: any) => {
             <ul className="space-y-4 mt-10 font-medium">
               {sideBarMenuItems.map((sm: SideBarMenuItemsType, key: number) => (
                 <li
-                  onClick={() =>
-                    sm.items.length > 0
-                      ? handleActivateSubMenu(sm)
-                      : handleNavigate(sm)
-                  }
+                  onClick={() => handleNavigate(sm)}
                   key={key}
                   className={`flex flex-col items-start ${
                     sm.name === activeTab
@@ -161,7 +159,10 @@ const Sidebar = ({ children }: any) => {
                     <ul className="ml-6 mt-2 ">
                       {sm.items.map((sbm: SidebarSubMenuItems, num: number) => (
                         <li
-                          onClick={() => handleNavigateSubMenu(sbm)}
+                          onClick={(e: React.MouseEvent<HTMLLIElement>) => {
+                            e.stopPropagation();
+                            handleNavigateSubMenu(sbm, sm);
+                          }}
                           key={num}
                           className={`flex w-44 flex-col items-start ${
                             sbm.name === activeSubTab

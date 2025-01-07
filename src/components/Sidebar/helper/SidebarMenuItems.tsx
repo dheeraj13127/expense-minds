@@ -15,7 +15,7 @@ export const sideBarMenuItems: SideBarMenuItemsType[] = [
   },
   {
     name: "transactions",
-    url: "/dashboard/transactions",
+    url: "/dashboard/transactions/manual",
     icon: <GrTransaction />,
     items: [
       {
@@ -44,7 +44,7 @@ export const sideBarMenuItems: SideBarMenuItemsType[] = [
   },
   {
     name: "settings",
-    url: "/dashboard/settings",
+    url: "/dashboard/settings/categories",
     icon: <IoSettingsSharp />,
     items: [
       {
