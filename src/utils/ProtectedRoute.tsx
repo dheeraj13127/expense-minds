@@ -25,6 +25,7 @@ const checkAuthorizedToken = async (
       },
     });
     const user = authorizedToken.data.user;
+
     const userCurrency = await axios.get(currencyUrl, {
       headers: {
         Authorization: "Bearer " + token,

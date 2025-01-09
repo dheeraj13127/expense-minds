@@ -14,6 +14,7 @@ const Manual = () => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
   );
+
   const [amount, setAmount] = useState<string>();
   const [amountType, setAmountType] = useState<string>("Expense");
   const [category, setCategory] = useState<string>("");
@@ -72,7 +73,7 @@ const Manual = () => {
   };
   return (
     <div className=" my-16">
-      {userDetails.categories.length > 0 ? (
+      {userDetails.categories.expense.length > 0 ? (
         <div className="">
           <div className="grid grid-cols-12 lg:px-16 gap-6">
             <div className="col-span-12 lg:col-span-7 2xl:col-span-7 bg-black px-6 py-6 rounded-md">
@@ -135,31 +136,63 @@ const Manual = () => {
                         >
                           {category}
                         </div>
-                        <div className="flex items-center flex-wrap h-20 overflow-y-auto">
-                          {userDetails.categories.map(
-                            (
-                              cat: UserSliceStateType["categories"][0],
-                              ind: number
-                            ) => (
-                              <div
-                                key={ind}
-                                className="m-2 cursor-pointer"
-                                onClick={() =>
-                                  handleSetCategory(
-                                    cat.categorySymbol + " " + cat.categoryName
-                                  )
-                                }
-                              >
-                                <p className="text-white border rounded px-2 py-0.5 font-inter text-xs  hover:bg-zinc-700 duration-150">
-                                  {cat.categoryName}
-                                  <span className="ml-1.5">
-                                    {cat.categorySymbol}
-                                  </span>
-                                </p>
-                              </div>
-                            )
-                          )}
-                        </div>
+                        {amountType === "Expense" ? (
+                          <div className="flex items-center flex-wrap h-20 overflow-y-auto">
+                            {userDetails.categories.expense.map(
+                              (
+                                cat: UserSliceStateType["categories"]["expense"][0],
+                                ind: number
+                              ) => (
+                                <div
+                                  key={ind}
+                                  className="m-2 cursor-pointer"
+                                  onClick={() =>
+                                    handleSetCategory(
+                                      cat.categorySymbol +
+                                        " " +
+                                        cat.categoryName
+                                    )
+                                  }
+                                >
+                                  <p className="text-white border rounded px-2 py-0.5 font-inter text-xs  hover:bg-zinc-700 duration-150">
+                                    {cat.categoryName}
+                                    <span className="ml-1.5">
+                                      {cat.categorySymbol}
+                                    </span>
+                                  </p>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        ) : (
+                          <div className="flex  flex-wrap h-20 overflow-y-auto">
+                            {userDetails.categories.income.map(
+                              (
+                                cat: UserSliceStateType["categories"]["income"][0],
+                                ind: number
+                              ) => (
+                                <div
+                                  key={ind}
+                                  className="m-2 cursor-pointer"
+                                  onClick={() =>
+                                    handleSetCategory(
+                                      cat.categorySymbol +
+                                        " " +
+                                        cat.categoryName
+                                    )
+                                  }
+                                >
+                                  <p className="text-white border rounded px-2 py-0.5 font-inter text-xs  hover:bg-zinc-700 duration-150">
+                                    {cat.categoryName}
+                                    <span className="ml-1.5">
+                                      {cat.categorySymbol}
+                                    </span>
+                                  </p>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

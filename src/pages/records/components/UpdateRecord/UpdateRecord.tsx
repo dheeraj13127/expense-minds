@@ -196,31 +196,59 @@ const UpdateRecord = ({ setShowUpdateModal, recordType }: UpdateRecordType) => {
                     >
                       {category}
                     </div>
-                    <div className="flex items-center flex-wrap h-20 overflow-y-auto">
-                      {userDetails.categories.map(
-                        (
-                          cat: UserSliceStateType["categories"][0],
-                          ind: number
-                        ) => (
-                          <div
-                            key={ind}
-                            className="m-2 cursor-pointer"
-                            onClick={() =>
-                              handleSetCategory(
-                                cat.categorySymbol + " " + cat.categoryName
-                              )
-                            }
-                          >
-                            <p className="text-white border rounded px-2 py-0.5 font-inter text-xs  hover:bg-zinc-700 duration-150">
-                              {cat.categoryName}
-                              <span className="ml-1.5">
-                                {cat.categorySymbol}
-                              </span>
-                            </p>
-                          </div>
-                        )
-                      )}
-                    </div>
+                    {amountType === "expense" ? (
+                      <div className="flex items-center flex-wrap h-20 overflow-y-auto">
+                        {userDetails.categories.expense.map(
+                          (
+                            cat: UserSliceStateType["categories"]["expense"][0],
+                            ind: number
+                          ) => (
+                            <div
+                              key={ind}
+                              className="m-2 cursor-pointer"
+                              onClick={() =>
+                                handleSetCategory(
+                                  cat.categorySymbol + " " + cat.categoryName
+                                )
+                              }
+                            >
+                              <p className="text-white border rounded px-2 py-0.5 font-inter text-xs  hover:bg-zinc-700 duration-150">
+                                {cat.categoryName}
+                                <span className="ml-1.5">
+                                  {cat.categorySymbol}
+                                </span>
+                              </p>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center flex-wrap h-20 overflow-y-auto">
+                        {userDetails.categories.income.map(
+                          (
+                            cat: UserSliceStateType["categories"]["income"][0],
+                            ind: number
+                          ) => (
+                            <div
+                              key={ind}
+                              className="m-2 cursor-pointer"
+                              onClick={() =>
+                                handleSetCategory(
+                                  cat.categorySymbol + " " + cat.categoryName
+                                )
+                              }
+                            >
+                              <p className="text-white border rounded px-2 py-0.5 font-inter text-xs  hover:bg-zinc-700 duration-150">
+                                {cat.categoryName}
+                                <span className="ml-1.5">
+                                  {cat.categorySymbol}
+                                </span>
+                              </p>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

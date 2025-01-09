@@ -12,7 +12,10 @@ const userSlice: Slice = createSlice({
     id: "",
     token: "",
     accounts: [],
-    categories: [],
+    categories: {
+      expense: [],
+      income: [],
+    },
     currency: {
       country: "",
       name: "",

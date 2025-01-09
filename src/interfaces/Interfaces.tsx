@@ -44,10 +44,17 @@ export interface UserSliceStateType {
     _id: string;
   }[];
   categories: {
-    categoryName: string;
-    categorySymbol: string;
-    _id: string;
-  }[];
+    expense: {
+      categoryName: string;
+      categorySymbol: string;
+      _id: string;
+    }[];
+    income: {
+      categoryName: string;
+      categorySymbol: string;
+      _id: string;
+    }[];
+  };
   currency: {
     country: string;
     name: string;
