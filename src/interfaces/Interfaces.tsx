@@ -117,6 +117,19 @@ export interface RecordsDataType {
   }[];
 }
 
+export interface StatisticsDataType {
+  _id: string;
+  expense: number;
+  income: number;
+  percentage: number;
+}
+
+export interface StatisticsType {
+  totalExpenseSum: number;
+  totalIncomeSum: number;
+  data: StatisticsDataType[];
+}
+
 export interface StatsBarType {
   income: number;
   expense: number;
