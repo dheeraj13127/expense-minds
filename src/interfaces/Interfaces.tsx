@@ -75,6 +75,7 @@ export interface RecordsSliceType {
 export interface RootState {
   user: UserSliceStateType;
   records: RecordsSliceType;
+  statistics: StatisticsSliceType;
 }
 
 export interface SidebarSubMenuItems {
@@ -128,12 +129,24 @@ export interface StatisticsType {
   totalExpenseSum: number;
   totalIncomeSum: number;
   data: StatisticsDataType[];
+  labels: string[];
+  percentages: string[];
 }
-
+export interface StatisticsSliceType {
+  income: number;
+  expense: number;
+  statisticsData: StatisticsDataType[];
+  labels: string[];
+  percentages: number[];
+}
 export interface StatsBarType {
   income: number;
   expense: number;
   total: number;
+}
+export interface StatisticsStatsBarType {
+  amountType: string;
+  setAmountType: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface FilterBarDataType {
@@ -149,4 +162,16 @@ export interface IndividualRecordType {
 export interface UpdateRecordType {
   setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
   recordType: string;
+}
+
+export interface DoughnutChartType {
+  labels: string[];
+  percentages: number[];
+  amountType: string;
+}
+
+export interface StatisticsInfoType {
+  amountType: string;
+  income: number;
+  expense: number;
 }

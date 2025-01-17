@@ -7,27 +7,20 @@ const FilterBar = () => {
   const [activeTab, setActiveTab] = useState<string>("records");
   const navigate = useNavigate();
   const routes = useMemo(
-    () => [
-      "/dashboard/records/daily",
-      "/dashboard/records/monthly",
-      "/dashboard/records/summary",
-    ],
+    () => ["/dashboard/statistics/monthly", "/dashboard/statistics/yearly"],
     []
   );
 
   const filterBarData: FilterBarDataType[] = [
-    { id: 1, name: "daily", url: "/dashboard/records/daily" },
-    { id: 2, name: "monthly", url: "/dashboard/records/monthly" },
-    { id: 3, name: "summary", url: "/dashboard/records/summary" },
+    { id: 1, name: "monthly", url: "/dashboard/statistics/monthly" },
+    { id: 2, name: "yearly", url: "/dashboard/statistics/yearly" },
   ];
   useEffect(() => {
     const matchedRoute = routes.find((el: string) => matchPath(el, pathname));
-    if (matchedRoute === "/dashboard/records/daily") {
-      setActiveTab("daily");
-    } else if (matchedRoute === "/dashboard/records/monthly") {
+    if (matchedRoute === "/dashboard/statistics/monthly") {
       setActiveTab("monthly");
-    } else if (matchedRoute === "/dashboard/records/summary") {
-      setActiveTab("summary");
+    } else if (matchedRoute === "/dashboard/statistics/yearly") {
+      setActiveTab("yearly");
     }
   }, [pathname, routes]);
 

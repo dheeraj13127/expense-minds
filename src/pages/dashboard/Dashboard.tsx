@@ -13,7 +13,7 @@ const Dashboard = () => {
       <Routes>
         <Route path="/records/*" element={<Records />} />
         <Route path="/transactions/*" element={<Transactions />} />
-        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/statistics/*" element={<Statistics />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/settings/*" element={<Settings />} />
         <Route path="/profile" element={<Profile />} />

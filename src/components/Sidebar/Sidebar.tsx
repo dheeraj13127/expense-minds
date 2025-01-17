@@ -30,9 +30,12 @@ const Sidebar = ({ children }: any) => {
   const routes = useMemo(
     () => [
       "/dashboard/records/daily",
+      "/dashboard/records/monthly",
+      "/dashboard/records/summary",
       "/dashboard/transactions/manual",
       "/dashboard/transactions/automated",
-      "/dashboard/statistics",
+      "/dashboard/statistics/monthly",
+      "/dashboard/statistics/yearly",
       "/dashboard/tools",
       "/dashboard/settings/categories",
       "/dashboard/settings/accounts",
@@ -56,13 +59,22 @@ const Sidebar = ({ children }: any) => {
     if (matchedRoute === "/dashboard/records/daily") {
       setActiveTab("records");
       setActiveSubTab("");
+    } else if (matchedRoute === "/dashboard/records/monthly") {
+      setActiveTab("records");
+      setActiveSubTab("");
+    } else if (matchedRoute === "/dashboard/records/summary") {
+      setActiveTab("records");
+      setActiveSubTab("");
     } else if (matchedRoute === "/dashboard/transactions/manual") {
       setActiveTab("transactions");
       setActiveSubTab("manual");
     } else if (matchedRoute === "/dashboard/transactions/automated") {
       setActiveTab("transactions");
       setActiveSubTab("automated");
-    } else if (matchedRoute === "/dashboard/statistics") {
+    } else if (matchedRoute === "/dashboard/statistics/monthly") {
+      setActiveTab("statistics");
+      setActiveSubTab("");
+    } else if (matchedRoute === "/dashboard/statistics/yearly") {
       setActiveTab("statistics");
       setActiveSubTab("");
     } else if (matchedRoute === "/dashboard/tools") {

@@ -32,7 +32,7 @@ export const sideBarMenuItems: SideBarMenuItemsType[] = [
   },
   {
     name: "statistics",
-    url: "/dashboard/statistics",
+    url: "/dashboard/statistics/monthly",
     icon: <FaChartPie />,
     items: [],
   },
