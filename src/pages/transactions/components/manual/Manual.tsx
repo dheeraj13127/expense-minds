@@ -72,7 +72,7 @@ const Manual = () => {
     }
   };
   return (
-    <div className=" my-16">
+    <div className=" my-8 sm:my-16">
       {userDetails.categories.expense.length > 0 ? (
         <div className="">
           <div className="grid grid-cols-12 lg:px-16 gap-6">
@@ -273,7 +273,9 @@ const Manual = () => {
             </div>
             <div className="col-span-12 lg:col-span-5 2xl:col-span-5 bg-black px-6 py-6 rounded-md">
               <TipsBar />
-              <Calculator />
+              <div className="mt-16">
+                <Calculator />
+              </div>
             </div>
           </div>
         </div>
