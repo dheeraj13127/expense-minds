@@ -175,3 +175,8 @@ export interface StatisticsInfoType {
   income: number;
   expense: number;
 }
+
+export interface CreateCategoryModalType {
+  setShowCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
+  categoryType: string;
+}

@@ -33,6 +33,13 @@ const userSlice: Slice = createSlice({
       state.categories = action.payload.categories;
       state.currency = action.payload.currency;
     },
+    addNewCategory(state: UserSliceStateType, action: GlobalActionType) {
+      if (action.payload.categoryType === "expense") {
+        state.categories.expense = action.payload.newCategory;
+      } else {
+        state.categories.income = action.payload.newCategory;
+      }
+    },
   },
 });
 

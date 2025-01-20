@@ -11,3 +11,6 @@ export const updateRecordURL = backendURL + "/record/update";
 export const deleteRecordURL = backendURL + "/record/delete";
 export const getStatisticsMonthlyURL = backendURL + "/statistics/monthly";
 export const getStatisticsYearlyURL = backendURL + "/statistics/yearly";
+export const createCategoryURL = backendURL + "/settings/category/create";
+export const updateCategoryURL = backendURL + "/settings/category/update";
+export const deleteCategoryURL = backendURL + "/settings/category/delete";
