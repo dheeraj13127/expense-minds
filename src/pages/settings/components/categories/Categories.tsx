@@ -1,19 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   RootState,
   UserSliceStateType,
 } from "../../../../interfaces/Interfaces";
 import { useEffect, useState } from "react";
 import CreateCategoryModal from "./components/CreateCategoryModal";
+import UpdateCategoryModal from "./components/UpdateCategoryModal";
+import { userActions } from "../../../../store/slices/user-slice";
 
 const Categories = () => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
   );
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const [categoryType, setCategoryType] = useState<string>("");
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (showCreateModal) {
+    if (showCreateModal || showUpdateModal) {
       document.body.classList.add("overflow-hidden");
     } else {
       document.body.classList.remove("overflow-hidden");
@@ -22,11 +26,23 @@ const Categories = () => {
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
-  }, [showCreateModal]);
+  }, [showCreateModal, showUpdateModal]);
 
   const handleCreateCategoryModal = (catType: string) => {
     setShowCreateModal(true);
     setCategoryType(catType);
+  };
+  const handleUpdateCategoryModal = (
+    cat: UserSliceStateType["categories"]["expense"][0],
+    catType: string
+  ) => {
+    dispatch(
+      userActions.setToBeUpdatedCategory({
+        toBeUpdatedCategory: cat,
+      })
+    );
+    setCategoryType(catType);
+    setShowUpdateModal(true);
   };
   return (
     <div className="grid grid-cols-12">
@@ -34,6 +50,12 @@ const Categories = () => {
         {showCreateModal && (
           <CreateCategoryModal
             setShowCreateModal={setShowCreateModal}
+            categoryType={categoryType}
+          />
+        )}
+        {showUpdateModal && (
+          <UpdateCategoryModal
+            setShowUpdateModal={setShowUpdateModal}
             categoryType={categoryType}
           />
         )}
@@ -59,7 +81,10 @@ const Categories = () => {
                   num: number
                 ) => (
                   <div key={num} className="">
-                    <p className="text-white font-poppins cursor-pointer hover:bg-opacity-80 duration-150 text-sm text-center bg-gray-800 px-1 py-2 rounded">
+                    <p
+                      onClick={() => handleUpdateCategoryModal(ce, "expense")}
+                      className="text-white font-poppins cursor-pointer hover:bg-opacity-80 duration-150 text-sm text-center bg-gray-800 px-1 py-2 rounded"
+                    >
                       {ce.categoryName}{" "}
                       <span className="ml-1.5">{ce.categorySymbol}</span>
                     </p>

@@ -1,7 +1,7 @@
 import { IoCloseCircleSharp } from "react-icons/io5";
 import {
-  CreateCategoryModalType,
   RootState,
+  UpdateCategoryModalType,
   UserSliceStateType,
 } from "../../../../../interfaces/Interfaces";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
@@ -9,23 +9,31 @@ import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { createCategoryURL } from "../../../../../url/URL";
+import { deleteCategoryURL, updateCategoryURL } from "../../../../../url/URL";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../../../store/slices/user-slice";
-const CreateCategoryModal = ({
-  setShowCreateModal,
+const UpdateCategoryModal = ({
+  setShowUpdateModal,
   categoryType,
-}: CreateCategoryModalType) => {
+}: UpdateCategoryModalType) => {
   const handleCloseModal = () => {
-    setShowCreateModal(false);
+    setShowUpdateModal(false);
   };
   const dispatch = useDispatch();
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
   );
+  const toBeUpdatedCategory = useSelector<
+    RootState,
+    UserSliceStateType["toBeUpdatedCategory"]
+  >((state) => state.user.toBeUpdatedCategory);
   const [emojiOpen, setEmojiOpen] = useState<boolean>(false);
-  const [categoryName, setCategoryName] = useState<string>("");
-  const [categorySymbol, setCategorySymbol] = useState<string>("");
+  const [categoryName, setCategoryName] = useState<string>(
+    toBeUpdatedCategory?.categoryName
+  );
+  const [categorySymbol, setCategorySymbol] = useState<string>(
+    toBeUpdatedCategory?.categorySymbol
+  );
   const handleOpenEmoji = () => {
     setEmojiOpen(!emojiOpen);
   };
@@ -33,7 +41,7 @@ const CreateCategoryModal = ({
     setCategorySymbol(emojiObject.emoji);
     setEmojiOpen(false);
   };
-  const handleSubmit = async () => {
+  const handleUpdate = async () => {
     if (categoryName === "" || categorySymbol === "") {
       toast.error("Please fill in the fields !");
     } else {
@@ -42,10 +50,11 @@ const CreateCategoryModal = ({
           categoryName,
           categorySymbol,
           categoryType,
+          _id: toBeUpdatedCategory._id,
         };
 
-        const result = await axios.post(
-          createCategoryURL,
+        const result = await axios.put(
+          updateCategoryURL,
           {
             data,
           },
@@ -56,17 +65,41 @@ const CreateCategoryModal = ({
           }
         );
         dispatch(
-          userActions.addNewCategory({
-            newCategory: result.data.result,
+          userActions.updateExistingCategory({
+            category: result.data.result,
             categoryType: categoryType,
           })
         );
-        toast.success("Added successfully");
-        setShowCreateModal(false);
+        toast.success("Updated successfully");
+        setShowUpdateModal(false);
       } catch (err) {
         console.log(err);
         toast.error("Something went wrong !");
       }
+    }
+  };
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `${deleteCategoryURL}?id=${toBeUpdatedCategory._id}&categoryType=${categoryType}`,
+
+        {
+          headers: {
+            Authorization: "Bearer " + userDetails.token,
+          },
+        }
+      );
+      dispatch(
+        userActions.deleteExistingCategory({
+          id: toBeUpdatedCategory._id,
+          categoryType: categoryType,
+        })
+      );
+      toast.success("Deleted successfully");
+      setShowUpdateModal(false);
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong !");
     }
   };
   return (
@@ -131,12 +164,18 @@ const CreateCategoryModal = ({
                 />
               </div>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center space-x-4">
               <button
-                onClick={handleSubmit}
+                onClick={handleDelete}
+                className=" bg-white text-black font-poppins text-sm px-3 py-2 rounded"
+              >
+                Delete
+              </button>
+              <button
+                onClick={handleUpdate}
                 className=" bg-black text-white font-poppins text-sm px-3 py-2 rounded"
               >
-                Submit
+                Update
               </button>
             </div>
           </div>
@@ -146,4 +185,4 @@ const CreateCategoryModal = ({
   );
 };
 
-export default CreateCategoryModal;
+export default UpdateCategoryModal;

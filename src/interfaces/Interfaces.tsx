@@ -61,6 +61,11 @@ export interface UserSliceStateType {
     symbol: string;
     _id: string;
   };
+  toBeUpdatedCategory: {
+    _id: string;
+    categoryName: string;
+    categorySymbol: string;
+  };
 }
 
 export interface RecordsSliceType {
@@ -178,5 +183,10 @@ export interface StatisticsInfoType {
 
 export interface CreateCategoryModalType {
   setShowCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
+  categoryType: string;
+}
+
+export interface UpdateCategoryModalType {
+  setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
   categoryType: string;
 }
