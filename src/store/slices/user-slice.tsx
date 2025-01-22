@@ -27,6 +27,16 @@ const userSlice: Slice = createSlice({
       categoryName: "",
       categorySymbol: "",
     },
+    parentAccountGroup: {
+      _id: "",
+      groupName: "",
+    },
+    toBeUpdatedSubAccount: {
+      _id: "",
+      name: "",
+      description: "",
+      amount: 0.0,
+    },
   },
   reducers: {
     setUserData(state: UserSliceStateType, action: GlobalActionType) {
@@ -83,6 +93,51 @@ const userSlice: Slice = createSlice({
         state.categories.income = state.categories.income.filter(
           (exp) => exp._id !== id
         );
+      }
+    },
+
+    setParentAccountGroup(state: UserSliceStateType, action: GlobalActionType) {
+      state.parentAccountGroup = action.payload.parentAccountGroup;
+    },
+    setToBeUpdatedSubAccount(
+      state: UserSliceStateType,
+      action: GlobalActionType
+    ) {
+      state.toBeUpdatedSubAccount = action.payload.toBeUpdatedSubAccount;
+    },
+    addNewSubAccount(state: UserSliceStateType, action: GlobalActionType) {
+      state.accounts = action.payload.accounts;
+    },
+    updateExistingSubAccount(
+      state: UserSliceStateType,
+      action: GlobalActionType
+    ) {
+      const subAccount = action.payload.subAccount;
+      const groupId = action.payload.groupId;
+
+      for (let i = 0; i < state.accounts.length; i++) {
+        if (state.accounts[i]._id === groupId) {
+          console.log("inside");
+          for (let j = 0; j < state.accounts[i].subAccounts.length; j++) {
+            if (state.accounts[i].subAccounts[j]._id === subAccount._id) {
+              state.accounts[i].subAccounts[j] = subAccount;
+            }
+          }
+        }
+      }
+    },
+    deleteExistingSubAccount(
+      state: UserSliceStateType,
+      action: GlobalActionType
+    ) {
+      const id = action.payload.id;
+      const groupId = action.payload.groupId;
+      for (let i = 0; i < state.accounts.length; i++) {
+        if (state.accounts[i]._id === groupId) {
+          state.accounts[i].subAccounts = state.accounts[i].subAccounts.filter(
+            (sa) => sa._id !== id
+          );
+        }
       }
     },
   },

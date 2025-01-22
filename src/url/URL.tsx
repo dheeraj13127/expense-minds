@@ -14,3 +14,6 @@ export const getStatisticsYearlyURL = backendURL + "/statistics/yearly";
 export const createCategoryURL = backendURL + "/settings/category/create";
 export const updateCategoryURL = backendURL + "/settings/category/update";
 export const deleteCategoryURL = backendURL + "/settings/category/delete";
+export const createSubAccountURL = backendURL + "/settings/account/create";
+export const updateSubAccountURL = backendURL + "/settings/account/update";
+export const deleteSubAccountURL = backendURL + "/settings/account/delete";

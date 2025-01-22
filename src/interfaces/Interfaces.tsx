@@ -33,14 +33,12 @@ export interface UserSliceStateType {
   token: string;
   accounts: {
     groupName: string;
-    subAccounts: [
-      {
-        amount: number;
-        description: string;
-        name: string;
-        _id: string;
-      }
-    ];
+    subAccounts: {
+      amount: number;
+      description: string;
+      name: string;
+      _id: string;
+    }[];
     _id: string;
   }[];
   categories: {
@@ -65,6 +63,16 @@ export interface UserSliceStateType {
     _id: string;
     categoryName: string;
     categorySymbol: string;
+  };
+  parentAccountGroup: {
+    _id: string;
+    groupName: string;
+  };
+  toBeUpdatedSubAccount: {
+    _id: string;
+    name: string;
+    description: string;
+    amount: number;
   };
 }
 
@@ -189,4 +197,12 @@ export interface CreateCategoryModalType {
 export interface UpdateCategoryModalType {
   setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
   categoryType: string;
+}
+
+export interface CreateSubAccountModalType {
+  setShowCreateSubAccountModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface UpdateSubAccountModalType {
+  setShowUpdateSubAccountModal: React.Dispatch<React.SetStateAction<boolean>>;
 }

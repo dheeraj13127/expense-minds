@@ -16,6 +16,10 @@ const SummaryDetails = ({ rdData }: IndividualRecordType) => {
             {rdData._id}
           </p>
           <div className="flex items-center justify-end space-x-10 ">
+            <p className="text-orange-600 text-xs font-inter">
+              {userDetails && userDetails.currency.symbol}{" "}
+              {rdData.income.toFixed(2)}
+            </p>
             <p className="text-blue-500 text-xs font-inter">
               {userDetails && userDetails.currency.symbol}{" "}
               {rdData.expense.toFixed(2)}

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import CreateCategoryModal from "./components/CreateCategoryModal";
 import UpdateCategoryModal from "./components/UpdateCategoryModal";
 import { userActions } from "../../../../store/slices/user-slice";
+import { CircleLoader } from "react-spinners";
+import { FaPlus } from "react-icons/fa";
 
 const Categories = () => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
@@ -69,7 +71,7 @@ const Categories = () => {
                 onClick={() => handleCreateCategoryModal("expense")}
                 className=" text-black text-sm font-inter bg-white px-3 py-1 rounded hover:bg-opacity-90 duration-150"
               >
-                Add
+                <FaPlus color="black" size={14} />
               </button>
             </div>
           </div>
@@ -93,8 +95,8 @@ const Categories = () => {
               )}
             </div>
           ) : (
-            <div className="font-poppins text-white text-center my-20">
-              Loading...
+            <div className="font-poppins text-white flex justify-center text-center my-20">
+              <CircleLoader color="#fff" />
             </div>
           )}
         </div>
@@ -108,7 +110,7 @@ const Categories = () => {
                 onClick={() => handleCreateCategoryModal("income")}
                 className=" text-black text-sm font-inter bg-white px-3 py-1 rounded hover:bg-opacity-90 duration-150"
               >
-                Add
+                <FaPlus color="black" size={14} />
               </button>
             </div>
           </div>
@@ -132,8 +134,8 @@ const Categories = () => {
               )}
             </div>
           ) : (
-            <div className="font-poppins text-white text-center my-20">
-              Loading...
+            <div className="font-poppins text-white flex justify-center text-center my-20">
+              <CircleLoader color="#fff" />
             </div>
           )}
         </div>
