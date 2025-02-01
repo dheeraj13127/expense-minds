@@ -12,6 +12,7 @@ const CalenderBar = ({
   result,
   setResult,
   handleFetchNewRecords,
+  showArrows,
 }: CalendarBarType) => {
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const [monthsActive, setMonthsActive] = useState<boolean>(false);
@@ -22,13 +23,13 @@ const CalenderBar = ({
   };
   useEffect(() => {
     if (monthsActive) {
-      handleFetchNewRecords();
+      handleFetchNewRecords?.();
       setMonthsActive(false);
     }
   }, [handleFetchNewRecords, monthsActive]);
   useEffect(() => {
     if (yearsActive) {
-      handleFetchNewRecords();
+      handleFetchNewRecords?.();
       setYearsActive(false);
     }
   }, [handleFetchNewRecords, yearsActive]);
@@ -52,25 +53,33 @@ const CalenderBar = ({
   };
   return (
     <div>
-      <div className="bg-black border-b border-white border-opacity-50 px-2 py-2 relative flex justify-center ">
-        <div className="mt-0.5 mr-3">
-          <button onClick={handlePrevDate}>
-            <MdKeyboardArrowLeft size={20} color="white" />
-          </button>
-        </div>
+      <div className="bg-black  px-2 py-2 relative flex justify-center ">
+        {showArrows && (
+          <div className="mt-0.5 mr-3">
+            <button onClick={handlePrevDate}>
+              <MdKeyboardArrowLeft size={20} color="white" />
+            </button>
+          </div>
+        )}
+
         <div
           className="text-white font-inter cursor-pointer"
           onClick={handleShowCalendar}
         >
           {calView === "months"
             ? result.format("MMM YYYY")
-            : result.format("YYYY")}
+            : calView === "years"
+            ? result.format("YYYY")
+            : result.format("DD MMM YYYY")}
         </div>
-        <div className="mt-0.5 ml-3">
-          <button onClick={handleNextDate}>
-            <MdKeyboardArrowRight size={20} color="white" />
-          </button>
-        </div>
+        {showArrows && (
+          <div className="mt-0.5 ml-3">
+            <button onClick={handleNextDate}>
+              <MdKeyboardArrowRight size={20} color="white" />
+            </button>
+          </div>
+        )}
+
         {showCalendar && (
           <div className=" absolute w-full">
             <Calendar

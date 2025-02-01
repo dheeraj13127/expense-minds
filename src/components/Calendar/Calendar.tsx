@@ -55,6 +55,12 @@ const Calendar = ({
     setView(newView);
   };
 
+  const selectDay = (dayIndex: number | null) => {
+    //@ts-expect-error accept this please
+    setResult(result.date(dayIndex));
+    setShowCalendar(false);
+  };
+
   const selectMonth = (monthIndex: number) => {
     setResult(result.month(monthIndex));
     if (daysView) {
@@ -143,7 +149,8 @@ const Calendar = ({
           {generateCalendarDays(result).map((day, index) => (
             <div
               key={index}
-              className={`p-2 rounded w-full flex text-white items-center justify-center ${
+              onClick={() => selectDay(day)}
+              className={`p-2 rounded w-full cursor-pointer flex text-white items-center justify-center ${
                 day === dayjs().date() && result.month() === dayjs().month()
                   ? "bg-gray-800"
                   : "bg-transparent"

@@ -3,13 +3,17 @@ import {
   RootState,
   UserSliceStateType,
 } from "../../../../interfaces/Interfaces";
-import { useState } from "react";
+import React, { useState } from "react";
 import TipsBar from "../../../../components/TipsBar/TipsBar";
 import Calculator from "../../../../components/Calculator/Calculator";
 import { CircleLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { createRecordURL } from "../../../../url/URL";
+import CalenderBar from "../../../../components/CalenderBar/CalenderBar";
+import dayjs from "dayjs";
+import { formatToISODateString } from "../helpers/ISODateFormatter";
+
 const Manual = () => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
     (state) => state.user
@@ -21,6 +25,9 @@ const Manual = () => {
   const [account, setAccount] = useState<string>("");
   const [note, setNote] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+
+  const [result, setResult] = useState<dayjs.Dayjs>(dayjs());
+
   const handleSetAmountType = (data: string) => {
     setAmountType(data);
   };
@@ -37,9 +44,11 @@ const Manual = () => {
     setAccount("");
     setNote("");
   };
+
   const handleSubmit = async () => {
     if (amount === "" || category === "" || account === "") {
       setError(true);
+      toast.error("Please fill in the fields");
     } else {
       setError(false);
       const data = {
@@ -49,6 +58,11 @@ const Manual = () => {
         amountType: amountType.toLocaleLowerCase(),
         account,
         note,
+        createdAt: formatToISODateString(
+          result.year(),
+          result.month(),
+          result.date()
+        ),
       };
       handleResetData();
       try {
@@ -71,6 +85,7 @@ const Manual = () => {
       }
     }
   };
+
   return (
     <div className=" my-8 sm:my-16">
       {userDetails.categories.expense.length > 0 ? (
@@ -104,6 +119,21 @@ const Manual = () => {
                 <div className="mt-10 space-y-4">
                   <div className="space-y-2 ">
                     <label htmlFor="amount" className="text-white font-inter">
+                      Date
+                    </label>
+                    <div className=" border border-gray-600 bg-gray-600 p-0.5 rounded-md">
+                      <CalenderBar
+                        calView="days"
+                        monthsView={true}
+                        daysView={true}
+                        result={result}
+                        setResult={setResult}
+                        showArrows={false}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2 ">
+                    <label htmlFor="amount" className="text-white font-inter">
                       Amount
                     </label>
                     <div className="flex items-center">
@@ -123,6 +153,7 @@ const Manual = () => {
                       </div>
                     </div>
                   </div>
+
                   <div className="space-y-2 ">
                     <label htmlFor="amount" className="text-white font-inter">
                       Category

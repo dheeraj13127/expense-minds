@@ -110,6 +110,7 @@ const StatisticsMonthly = () => {
           result={result}
           setResult={setResult}
           handleFetchNewRecords={handleFetchNewStatisticsData}
+          showArrows={true}
         />
         <StatisticsStatsBar
           amountType={amountType}

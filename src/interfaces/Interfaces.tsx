@@ -12,8 +12,9 @@ export interface CalendarBarType {
   monthsView: boolean;
   setResult: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
   result: dayjs.Dayjs;
-  handleFetchNewRecords: () => void;
+  handleFetchNewRecords?: () => void;
   calView: string;
+  showArrows: boolean;
 }
 export interface CalendarType {
   calView: string;

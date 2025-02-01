@@ -113,6 +113,7 @@ const DailyRecords = () => {
           result={result}
           setResult={setResult}
           handleFetchNewRecords={handleFetchNewRecords}
+          showArrows={true}
         />
         <StatsBar income={income} expense={expense} total={total} />
         {showUpdateModal && (

@@ -19,11 +19,11 @@ const StatisticsInfo = ({
       <div className=" my-2 flex items-center justify-between p-3 border rounded">
         <p className="text-white font-poppins">Total</p>
         {amountType === "expense" ? (
-          <p className="font-poppins text-orange-700 text-sm">
+          <p className="font-poppins text-blue-500 text-sm">
             $ {expense?.toFixed(2)}
           </p>
         ) : (
-          <p className="font-poppins text-blue-500 text-sm">
+          <p className="font-poppins text-orange-700 text-sm">
             $ {income?.toFixed(2)}
           </p>
         )}
@@ -42,11 +42,11 @@ const StatisticsInfo = ({
             </div>
             <div>
               {amountType === "expense" ? (
-                <p className="font-poppins text-orange-700 text-sm">
+                <p className="font-poppins text-blue-500 text-sm">
                   $ {sd.expense.toFixed(2)}
                 </p>
               ) : (
-                <p className="font-poppins text-blue-500 text-sm">
+                <p className="font-poppins text-orange-700 text-sm">
                   $ {sd.income.toFixed(2)}
                 </p>
               )}
