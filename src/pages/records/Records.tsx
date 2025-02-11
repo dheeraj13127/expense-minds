@@ -12,7 +12,6 @@ const Records = () => {
         <Routes>
           <Route path="/daily" element={<DailyRecords />} />
           <Route path="/monthly" element={<MonthlyRecords />} />
-
           <Route path="/summary" element={<Summary />} />
           <Route path="*" element={<Error />} />
         </Routes>

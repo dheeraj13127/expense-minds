@@ -4,13 +4,17 @@ import StatsBar from "../StatsBar/StatsBar";
 import CalenderBar from "../../../../components/CalenderBar/CalenderBar";
 import dayjs from "dayjs";
 import axios from "axios";
-import { getRecordsByDayURL } from "../../../../url/URL";
+import {
+  getRecordsByDayURL,
+  processRecordsByDaySummaryURL,
+} from "../../../../url/URL";
 import { RecordsDataType, RootState } from "../../../../interfaces/Interfaces";
 import IndividualRecord from "./components/IndividualRecors/IndividualRecord";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { recordsActions } from "../../../../store/slices/records-slice";
 import UpdateRecord from "../UpdateRecord/UpdateRecord";
+import SummaryBar from "../SummaryBar/SummaryBar";
 
 const DailyRecords = () => {
   const income: number = useSelector<RootState, number>(
@@ -21,6 +25,9 @@ const DailyRecords = () => {
   );
   const total: number = useSelector<RootState, number>(
     (state) => state.records.total
+  );
+  const fetchedRecordsByDaySummary: boolean = useSelector<RootState, boolean>(
+    (state) => state.records.fetchedRecordsByDaySummary
   );
   const recordsData: RecordsDataType["data"] = useSelector<
     RootState,
@@ -55,7 +62,6 @@ const DailyRecords = () => {
     );
 
     const data = recordsData.data.result[0];
-
     dispatch(
       recordsActions.setRecordsDataAndState({
         income: data ? data.totalIncomeSum : 0,
@@ -64,13 +70,50 @@ const DailyRecords = () => {
         recordsData: data ? data.data : [],
       })
     );
-  }, [token, dispatch]);
+    if (!fetchedRecordsByDaySummary) {
+      const recordsSummary = await axios.post(
+        processRecordsByDaySummaryURL,
+        {
+          data: {
+            recordsByDay: data,
+          },
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      dispatch(
+        recordsActions.setRecordsSummary({
+          recordsSummary: recordsSummary.data.summary,
+        })
+      );
+      dispatch(
+        recordsActions.setFetchedRecordsByDaySummary({
+          fetchedSummary: true,
+        })
+      );
+      dispatch(
+        recordsActions.setFetchedRecordsByMonthlySummary({
+          fetchedSummary: false,
+        })
+      );
+    }
+  }, [token, dispatch, fetchedRecordsByDaySummary]);
+
   useEffect(() => {
     fetchRecordsByDay();
   }, [fetchRecordsByDay]);
 
   const handleFetchNewRecords = async () => {
     try {
+      dispatch(
+        recordsActions.setRecordsSummary({
+          recordsSummary: "",
+        })
+      );
       const data = result.year() + "-" + result.format("MM");
       const recordsData = await axios.get(`${getRecordsByDayURL}?day=${data}`, {
         headers: {
@@ -96,6 +139,24 @@ const DailyRecords = () => {
             recordsData: newData.data,
           })
         );
+        const recordsSummary = await axios.post(
+          processRecordsByDaySummaryURL,
+          {
+            data: {
+              recordsByDay: newData,
+            },
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        dispatch(
+          recordsActions.setRecordsSummary({
+            recordsSummary: recordsSummary.data.summary,
+          })
+        );
       }
     } catch (err) {
       console.log(err);
@@ -116,6 +177,8 @@ const DailyRecords = () => {
           showArrows={true}
         />
         <StatsBar income={income} expense={expense} total={total} />
+        {recordsData.length > 0 && <SummaryBar />}
+
         {showUpdateModal && (
           <UpdateRecord
             setShowUpdateModal={setShowUpdateModal}

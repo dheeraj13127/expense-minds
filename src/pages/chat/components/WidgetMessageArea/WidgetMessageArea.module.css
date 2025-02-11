@@ -1,0 +1,23 @@
+.messageOpenContainer {
+  animation: animate 0.3s ease-out;
+}
+@keyframes animate {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.messageCloseContainer {
+  animation: animates 0.3s ease-in;
+}
+@keyframes animates {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}

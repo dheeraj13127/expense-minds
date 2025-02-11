@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import sidebarLogo from "../../assets/em-logo.png";
+import sidebarLogo from "../../assets/em_new_logo.png";
 import { MdOutlineSubject } from "react-icons/md";
-
+import { IoMdChatbubbles } from "react-icons/io";
 import {
   matchPath,
   NavigateFunction,
@@ -16,10 +16,12 @@ import {
 } from "../../interfaces/Interfaces";
 import { sideBarMenuItems } from "./helper/SidebarMenuItems";
 import { PiSignOutBold } from "react-icons/pi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { chatActions } from "../../store/slices/chats-slice";
 const Sidebar = ({ children }: any) => {
   const sidebarRef = useRef<any>();
+  const dispatch = useDispatch();
   const [navActive, setNavActive] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("about");
   const [activeSubTab, setActiveSubTab] = useState<string>("");
@@ -32,8 +34,7 @@ const Sidebar = ({ children }: any) => {
       "/dashboard/records/daily",
       "/dashboard/records/monthly",
       "/dashboard/records/summary",
-      "/dashboard/transactions/manual",
-      "/dashboard/transactions/automated",
+      "/dashboard/transactions",
       "/dashboard/statistics/monthly",
       "/dashboard/statistics/yearly",
       "/dashboard/tools",
@@ -65,12 +66,9 @@ const Sidebar = ({ children }: any) => {
     } else if (matchedRoute === "/dashboard/records/summary") {
       setActiveTab("records");
       setActiveSubTab("");
-    } else if (matchedRoute === "/dashboard/transactions/manual") {
+    } else if (matchedRoute === "/dashboard/transactions") {
       setActiveTab("transactions");
-      setActiveSubTab("manual");
-    } else if (matchedRoute === "/dashboard/transactions/automated") {
-      setActiveTab("transactions");
-      setActiveSubTab("automated");
+      setActiveSubTab("");
     } else if (matchedRoute === "/dashboard/statistics/monthly") {
       setActiveTab("statistics");
       setActiveSubTab("");
@@ -110,6 +108,19 @@ const Sidebar = ({ children }: any) => {
     navigate("/dashboard/profile");
     setActiveTab("profile");
   };
+  const handleActivateChat = () => {
+    setNavActive(false);
+    dispatch(
+      chatActions.setAnimationActive({
+        animationActive: true,
+      })
+    );
+    dispatch(
+      chatActions.setWidgetActive({
+        widgetActive: true,
+      })
+    );
+  };
   const handleSignOut = () => {
     localStorage.clear();
     toast.success("Signed out");
@@ -133,7 +144,11 @@ const Sidebar = ({ children }: any) => {
         <div className="h-full p-4 overflow-y-auto bg-orange-800 flex flex-col justify-between ">
           <div className="">
             <div className="flex items-center justify-center ">
-              <img src={sidebarLogo} alt="logo" className="" />
+              <img
+                src={sidebarLogo}
+                alt="logo"
+                className=" w-40 p-1 rounded-xl"
+              />
             </div>
 
             <ul className="space-y-4 mt-10 font-medium">
@@ -211,11 +226,22 @@ const Sidebar = ({ children }: any) => {
             </ul>
           </div>
           <div className="space-y-3">
+            <div>
+              <button
+                onClick={handleActivateChat}
+                className="text-white border flex items-center justify-center  font-inter w-full font-medium rounded-md text-sm bg-black px-2 py-3"
+              >
+                <span className="mr-2">
+                  <IoMdChatbubbles size={16} />
+                </span>
+                Expense AI Chat
+              </button>
+            </div>
             <div
               onClick={handleNavigateProfile}
               className=" border-2 rounded-md p-1.5 flex flex-wrap  items-center justify-center space-x-2 cursor-pointer hover:bg-white hover:bg-opacity-30 duration-150"
             >
-              <div className="h-8 w-8 rounded-full bg-black flex justify-center items-center">
+              <div className="h-7 w-7 rounded-full bg-black flex justify-center items-center">
                 <p className=" text-white">{user?.name[0]}</p>
               </div>
               <p className=" font-poppins text-white text-sm">{user?.name}</p>

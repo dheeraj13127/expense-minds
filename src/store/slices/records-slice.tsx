@@ -20,6 +20,9 @@ const recordsSlice: Slice = createSlice({
       _id: "",
     },
     parentRecordId: "",
+    recordsSummary: "",
+    fetchedRecordsByDaySummary: false,
+    fetchedRecordsByMonthlySummary: false,
   },
 
   reducers: {
@@ -72,6 +75,21 @@ const recordsSlice: Slice = createSlice({
           (x) => x._id !== parentRecordId
         );
       }
+    },
+    setRecordsSummary(state: RecordsSliceType, action: GlobalActionType) {
+      state.recordsSummary = action.payload.recordsSummary;
+    },
+    setFetchedRecordsByDaySummary(
+      state: RecordsSliceType,
+      action: GlobalActionType
+    ) {
+      state.fetchedRecordsByDaySummary = action.payload.fetchedSummary;
+    },
+    setFetchedRecordsByMonthlySummary(
+      state: RecordsSliceType,
+      action: GlobalActionType
+    ) {
+      state.fetchedRecordsByMonthlySummary = action.payload.fetchedSummary;
     },
   },
 });

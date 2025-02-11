@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { FilterBarDataType } from "../../../../interfaces/Interfaces";
 import { matchPath, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { recordsActions } from "../../../../store/slices/records-slice";
 
 const FilterBar = () => {
   const { pathname } = useLocation();
   const [activeTab, setActiveTab] = useState<string>("records");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const routes = useMemo(
     () => [
       "/dashboard/records/daily",
@@ -34,6 +37,11 @@ const FilterBar = () => {
   const handleSetFilter = (value: FilterBarDataType) => {
     navigate(value.url);
     setActiveTab(value.name);
+    dispatch(
+      recordsActions.setRecordsSummary({
+        recordsSummary: "",
+      })
+    );
   };
   return (
     <div className="bg-black border-b rounded-t border-white border-opacity-50 px-2 pt-2 flex items-center justify-around space-x-6">

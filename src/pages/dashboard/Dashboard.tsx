@@ -6,8 +6,14 @@ import Statistics from "../statistics/Statistics";
 import Tools from "../tools/Tools";
 import Settings from "../settings/Settings";
 import Profile from "../profile/Profile";
+import Chat from "../chat/Chat";
+import { useSelector } from "react-redux";
+import { RootState } from "../../interfaces/Interfaces";
 
 const Dashboard = () => {
+  const widgetActive = useSelector<RootState, boolean>(
+    (state) => state.chat.widgetActive
+  );
   return (
     <div>
       <Routes>
@@ -19,6 +25,7 @@ const Dashboard = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Error />} />
       </Routes>
+      {widgetActive && <Chat />}
     </div>
   );
 };

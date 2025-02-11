@@ -70,7 +70,7 @@ const Percentage = () => {
         <div className="">
           <button
             onClick={handleCalculate}
-            className=" bg-blue-500 p-1 w-full mt-5 rounded-lg text-white hover:bg-opacity-80 duration-150"
+            className=" bg-zinc-500 p-1 w-full mt-5 rounded-lg text-white hover:bg-opacity-80 duration-150"
           >
             Calculate
           </button>

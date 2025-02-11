@@ -17,3 +17,7 @@ export const deleteCategoryURL = backendURL + "/settings/category/delete";
 export const createSubAccountURL = backendURL + "/settings/account/create";
 export const updateSubAccountURL = backendURL + "/settings/account/update";
 export const deleteSubAccountURL = backendURL + "/settings/account/delete";
+export const processRecordsByDaySummaryURL =
+  backendURL + "/automated/day-summary";
+export const processRecordsByMonthlySummaryURL =
+  backendURL + "/automated/monthly-summary";

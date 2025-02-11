@@ -4,13 +4,17 @@ import StatsBar from "../StatsBar/StatsBar";
 import CalenderBar from "../../../../components/CalenderBar/CalenderBar";
 import dayjs from "dayjs";
 import axios from "axios";
-import { getRecordsByMonthURL } from "../../../../url/URL";
+import {
+  getRecordsByMonthURL,
+  processRecordsByMonthlySummaryURL,
+} from "../../../../url/URL";
 import { RecordsDataType, RootState } from "../../../../interfaces/Interfaces";
 import IndividualRecords from "./components/IndividualRecords/IndividualRecords";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { recordsActions } from "../../../../store/slices/records-slice";
 import UpdateRecord from "../UpdateRecord/UpdateRecord";
+import SummaryBar from "../SummaryBar/SummaryBar";
 
 const MonthlyRecords = () => {
   const income: number = useSelector<RootState, number>(
@@ -28,6 +32,10 @@ const MonthlyRecords = () => {
   >((state) => state.records.recordsData);
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const fetchedRecordsByMonthlySummary: boolean = useSelector<
+    RootState,
+    boolean
+  >((state) => state.records.fetchedRecordsByMonthlySummary);
 
   useEffect(() => {
     if (showUpdateModal) {
@@ -62,13 +70,48 @@ const MonthlyRecords = () => {
         recordsData: data ? data.data : [],
       })
     );
-  }, [token, dispatch]);
+    if (!fetchedRecordsByMonthlySummary) {
+      const recordsSummary = await axios.post(
+        processRecordsByMonthlySummaryURL,
+        {
+          data: {
+            recordsByMonth: data,
+          },
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      dispatch(
+        recordsActions.setRecordsSummary({
+          recordsSummary: recordsSummary.data.summary,
+        })
+      );
+      dispatch(
+        recordsActions.setFetchedRecordsByMonthlySummary({
+          fetchedSummary: true,
+        })
+      );
+      dispatch(
+        recordsActions.setFetchedRecordsByDaySummary({
+          fetchedSummary: false,
+        })
+      );
+    }
+  }, [token, dispatch, fetchedRecordsByMonthlySummary]);
   useEffect(() => {
     fetchRecordsByMonth();
   }, [fetchRecordsByMonth]);
 
   const handleFetchNewRecords = async () => {
     try {
+      dispatch(
+        recordsActions.setRecordsSummary({
+          recordsSummary: "",
+        })
+      );
       const data = result.year();
       const recordsData = await axios.get(
         `${getRecordsByMonthURL}?month=${data}`,
@@ -97,6 +140,24 @@ const MonthlyRecords = () => {
             recordsData: newData.data,
           })
         );
+        const recordsSummary = await axios.post(
+          processRecordsByMonthlySummaryURL,
+          {
+            data: {
+              recordsByMonth: newData,
+            },
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        dispatch(
+          recordsActions.setRecordsSummary({
+            recordsSummary: recordsSummary.data.summary,
+          })
+        );
       }
     } catch (err) {
       console.log(err);
@@ -117,6 +178,7 @@ const MonthlyRecords = () => {
           showArrows={true}
         />
         <StatsBar income={income} expense={expense} total={total} />
+        {recordsData.length > 0 && <SummaryBar />}
         {showUpdateModal && (
           <UpdateRecord
             setShowUpdateModal={setShowUpdateModal}

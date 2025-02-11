@@ -84,12 +84,20 @@ export interface RecordsSliceType {
   recordsData: RecordsDataType["data"];
   toBeUpdatedRecord: RecordType;
   parentRecordId: string;
+  recordsSummary: string;
+  fetchedRecordsByDaySummary: boolean;
+  fetchedRecordsByMonthlySummary: boolean;
+}
+export interface ChatSliceType {
+  widgetActive: boolean;
+  animationActive: boolean;
 }
 
 export interface RootState {
   user: UserSliceStateType;
   records: RecordsSliceType;
   statistics: StatisticsSliceType;
+  chat: ChatSliceType;
 }
 
 export interface SidebarSubMenuItems {
@@ -206,4 +214,18 @@ export interface CreateSubAccountModalType {
 
 export interface UpdateSubAccountModalType {
   setShowUpdateSubAccountModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface WidgetMessageAreaType {
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  animation: boolean;
+  setAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export interface WidgetProfileType {
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export interface WidgetDefaultType {
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setAnimation: React.Dispatch<React.SetStateAction<boolean>>;
 }
