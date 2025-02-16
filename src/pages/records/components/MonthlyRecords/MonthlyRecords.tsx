@@ -70,7 +70,7 @@ const MonthlyRecords = () => {
         recordsData: data ? data.data : [],
       })
     );
-    if (!fetchedRecordsByMonthlySummary) {
+    if (!fetchedRecordsByMonthlySummary && data) {
       const recordsSummary = await axios.post(
         processRecordsByMonthlySummaryURL,
         {

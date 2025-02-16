@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import CreateCategoryModal from "./components/CreateCategoryModal";
 import UpdateCategoryModal from "./components/UpdateCategoryModal";
 import { userActions } from "../../../../store/slices/user-slice";
-import { CircleLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { FaPlus } from "react-icons/fa";
 
 const Categories = () => {
@@ -96,7 +96,7 @@ const Categories = () => {
             </div>
           ) : (
             <div className="font-poppins text-white flex justify-center text-center my-20">
-              <CircleLoader color="#fff" />
+              <ClipLoader color="#fff" />
             </div>
           )}
         </div>
@@ -135,7 +135,7 @@ const Categories = () => {
             </div>
           ) : (
             <div className="font-poppins text-white flex justify-center text-center my-20">
-              <CircleLoader color="#fff" />
+              <ClipLoader color="#fff" />
             </div>
           )}
         </div>

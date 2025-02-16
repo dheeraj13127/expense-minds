@@ -8,6 +8,7 @@ import { useState } from "react";
 import CreateSubAccountModal from "./components/CreateSubAccountModal";
 import { userActions } from "../../../../store/slices/user-slice";
 import UpdateSubAccountModal from "./components/UpdateSubAccountModal";
+import { ClipLoader } from "react-spinners";
 
 const Accounts = () => {
   const userDetails = useSelector<RootState, UserSliceStateType>(
@@ -50,6 +51,7 @@ const Accounts = () => {
     );
     setShowUpdateSubAccountModal(true);
   };
+
   return (
     <div className=" grid grid-cols-12">
       <div className="col-span-12">
@@ -66,65 +68,71 @@ const Accounts = () => {
       </div>
       <div className=" col-span-12">
         <div className="bg-black w-full px-4 py-8 rounded">
-          <div className=" space-y-4">
-            {userDetails?.accounts.map(
-              (acc: UserSliceStateType["accounts"][0], key: number) => (
-                <div key={key} className="bg-zinc-900 px-2 py-3 rounded-md">
-                  <div className="flex items-center justify-between">
-                    <p className="font-inter text-sm text-white font-medium">
-                      {acc.groupName}
-                    </p>
-                    <div className="">
-                      <button
-                        onClick={() =>
-                          handleCreateSubAccountModal(acc._id, acc.groupName)
-                        }
-                        className=" text-black text-sm font-inter bg-white px-3 py-1 rounded hover:bg-opacity-90 duration-150"
-                      >
-                        <FaPlus color="black" size={14} />
-                      </button>
+          {userDetails?.accounts.length > 0 ? (
+            <div className=" space-y-4">
+              {userDetails?.accounts.map(
+                (acc: UserSliceStateType["accounts"][0], key: number) => (
+                  <div key={key} className="bg-zinc-900 px-2 py-3 rounded-md">
+                    <div className="flex items-center justify-between">
+                      <p className="font-inter text-sm text-white font-medium">
+                        {acc.groupName}
+                      </p>
+                      <div className="">
+                        <button
+                          onClick={() =>
+                            handleCreateSubAccountModal(acc._id, acc.groupName)
+                          }
+                          className=" text-black text-sm font-inter bg-white px-3 py-1 rounded hover:bg-opacity-90 duration-150"
+                        >
+                          <FaPlus color="black" size={14} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className=" space-y-4 mt-4">
+                      {acc.subAccounts.map(
+                        (
+                          subAcc: UserSliceStateType["accounts"][0]["subAccounts"][0],
+                          num: number
+                        ) => (
+                          <div
+                            key={num}
+                            onClick={() =>
+                              handleUpdateSubAccountModal(
+                                acc._id,
+                                acc.groupName,
+                                subAcc
+                              )
+                            }
+                            className="bg-gray-800  px-2 py-3 rounded-md flex items-center cursor-pointer justify-between"
+                          >
+                            <div className=" space-y-2">
+                              <p className="font-inter text-sm text-white font-medium">
+                                {subAcc.name}
+                              </p>
+                              {subAcc.description !== "" && (
+                                <p className="font-inter text-xs text-white text-opacity-50 font-medium">
+                                  {subAcc.description}
+                                </p>
+                              )}
+                            </div>
+
+                            <p className="font-inter text-sm text-white text-opacity-70 font-medium">
+                              {subAcc.amount.toFixed(2)}
+                            </p>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
-
-                  <div className=" space-y-4 mt-4">
-                    {acc.subAccounts.map(
-                      (
-                        subAcc: UserSliceStateType["accounts"][0]["subAccounts"][0],
-                        num: number
-                      ) => (
-                        <div
-                          key={num}
-                          onClick={() =>
-                            handleUpdateSubAccountModal(
-                              acc._id,
-                              acc.groupName,
-                              subAcc
-                            )
-                          }
-                          className="bg-gray-800  px-2 py-3 rounded-md flex items-center cursor-pointer justify-between"
-                        >
-                          <div className=" space-y-2">
-                            <p className="font-inter text-sm text-white font-medium">
-                              {subAcc.name}
-                            </p>
-                            {subAcc.description !== "" && (
-                              <p className="font-inter text-xs text-white text-opacity-50 font-medium">
-                                {subAcc.description}
-                              </p>
-                            )}
-                          </div>
-
-                          <p className="font-inter text-sm text-white text-opacity-70 font-medium">
-                            {subAcc.amount.toFixed(2)}
-                          </p>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
-              )
-            )}
-          </div>
+                )
+              )}
+            </div>
+          ) : (
+            <div className="font-poppins flex justify-center text-center my-20">
+              <ClipLoader color="#fff" />
+            </div>
+          )}
         </div>
       </div>
     </div>

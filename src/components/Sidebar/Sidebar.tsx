@@ -19,6 +19,7 @@ import { PiSignOutBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { chatActions } from "../../store/slices/chats-slice";
+import { ClipLoader } from "react-spinners";
 const Sidebar = ({ children }: any) => {
   const sidebarRef = useRef<any>();
   const dispatch = useDispatch();
@@ -91,6 +92,16 @@ const Sidebar = ({ children }: any) => {
     setNavActive(false);
     navigate(item.url);
     setActiveTab(item.name);
+    dispatch(
+      chatActions.setAnimationActive({
+        animationActive: false,
+      })
+    );
+    dispatch(
+      chatActions.setWidgetActive({
+        widgetActive: false,
+      })
+    );
   };
 
   const handleNavigateSubMenu = (
@@ -101,6 +112,16 @@ const Sidebar = ({ children }: any) => {
     navigate(item.url);
     setActiveTab(parent.name);
     setActiveSubTab(item.name);
+    dispatch(
+      chatActions.setAnimationActive({
+        animationActive: false,
+      })
+    );
+    dispatch(
+      chatActions.setWidgetActive({
+        widgetActive: false,
+      })
+    );
   };
 
   const handleNavigateProfile = () => {
@@ -234,17 +255,25 @@ const Sidebar = ({ children }: any) => {
                 <span className="mr-2">
                   <IoMdChatbubbles size={16} />
                 </span>
-                Expense AI Chat
+                Expy AI Chat
               </button>
             </div>
             <div
               onClick={handleNavigateProfile}
               className=" border-2 rounded-md p-1.5 flex flex-wrap  items-center justify-center space-x-2 cursor-pointer hover:bg-white hover:bg-opacity-30 duration-150"
             >
-              <div className="h-7 w-7 rounded-full bg-black flex justify-center items-center">
-                <p className=" text-white">{user?.name[0]}</p>
-              </div>
-              <p className=" font-poppins text-white text-sm">{user?.name}</p>
+              {user?.name ? (
+                <>
+                  <div className="h-7 w-7 rounded-full bg-black flex justify-center items-center">
+                    <p className=" text-white">{user?.name[0]}</p>
+                  </div>
+                  <p className=" font-poppins text-white text-sm">
+                    {user?.name}
+                  </p>
+                </>
+              ) : (
+                <ClipLoader color="#ffffff" size={27} />
+              )}
             </div>
             <div>
               <button

@@ -7,13 +7,60 @@ import Tools from "../tools/Tools";
 import Settings from "../settings/Settings";
 import Profile from "../profile/Profile";
 import Chat from "../chat/Chat";
-import { useSelector } from "react-redux";
-import { RootState } from "../../interfaces/Interfaces";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ConversationCreatedType,
+  MessageType,
+  RootState,
+} from "../../interfaces/Interfaces";
+import SocketIOClient, { Socket } from "socket.io-client";
+import { socketURL } from "../../url/URL";
+import { useEffect } from "react";
+import { chatActions } from "../../store/slices/chats-slice";
 const Dashboard = () => {
   const widgetActive = useSelector<RootState, boolean>(
     (state) => state.chat.widgetActive
   );
+
+  const token = localStorage.getItem("token");
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (token) {
+      const newSocket: Socket = SocketIOClient(`${socketURL}/?token=${token}`);
+
+      dispatch(
+        chatActions.setSocket({
+          socket: newSocket,
+        })
+      );
+      newSocket.on("conversation-created", (data: string) => {
+        const resp: ConversationCreatedType = JSON.parse(data);
+        dispatch(
+          chatActions.setConversation({
+            conversation: resp.conversation._id,
+          })
+        );
+      });
+      newSocket.on("dm-user-answer", (data: string) => {
+        const resp: MessageType = JSON.parse(data);
+
+        dispatch(
+          chatActions.addMessage({
+            message: resp.message,
+          })
+        );
+      });
+      return () => {
+        newSocket.close();
+        dispatch(
+          chatActions.setSocket({
+            socket: null,
+          })
+        );
+      };
+    }
+  }, [token, dispatch]);
   return (
     <div>
       <Routes>

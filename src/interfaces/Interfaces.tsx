@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { ReactNode } from "react";
+import { Socket } from "socket.io-client";
 
 export interface GlobalActionType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,6 +92,10 @@ export interface RecordsSliceType {
 export interface ChatSliceType {
   widgetActive: boolean;
   animationActive: boolean;
+  socket: Socket | null;
+  conversation: string | null;
+  messages: MessageType[];
+  typing: boolean;
 }
 
 export interface RootState {
@@ -228,4 +233,17 @@ export interface WidgetProfileType {
 export interface WidgetDefaultType {
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
   setAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface MessageType {
+  conversationId: string;
+  message: string;
+  sent_by: string;
+  userId: string;
+  _id: string;
+}
+export interface ConversationCreatedType {
+  conversation: {
+    _id: string;
+  };
 }

@@ -1,11 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../../interfaces/Interfaces";
+import { useDispatch } from "react-redux";
 import { IoMdClose } from "react-icons/io";
 import { chatActions } from "../../../../../store/slices/chats-slice";
+import logo from "../../../../../assets/em-new-ico.png";
 const WidgetProfile = () => {
-  const userName: string = useSelector<RootState, string>(
-    (state) => state.user.name
-  );
   const dispatch = useDispatch();
   const handleCloseWidget = () => {
     dispatch(
@@ -24,9 +21,21 @@ const WidgetProfile = () => {
   };
   return (
     <div className=" bg-gray-500  border-opacity-20 sm:rounded-t-3xl px-4 py-3 flex items-center justify-between">
-      <div className="h-8 w-8 bg-white text-black font-poppins flex items-center rounded-full justify-center">
-        {userName[0]}
+      <div className=" flex items-center space-x-3">
+        <div className=" bg-white  p-2 flex items-center rounded-full justify-center">
+          <img src={logo} alt="logo" className=" h-6 w-6" />
+        </div>
+        <div className=" space-y-0.5">
+          <p className="font-roboto text-white  font-medium">Expy AI Chat</p>
+          <div className=" flex items-center space-x-1">
+            <div className="h-2 w-2 rounded-full bg-green-600"></div>
+            <p className=" text-white text-opacity-70 font-poppins text-xs">
+              Active
+            </p>
+          </div>
+        </div>
       </div>
+
       <button onClick={handleCloseWidget}>
         <IoMdClose size={24} color="white" />
       </button>

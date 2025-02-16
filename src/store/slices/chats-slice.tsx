@@ -6,6 +6,10 @@ const chatSlice: Slice = createSlice({
   initialState: {
     widgetActive: false,
     animationActive: false,
+    socket: null,
+    conversation: null,
+    messages: [],
+    typing: false,
   },
 
   reducers: {
@@ -14,6 +18,21 @@ const chatSlice: Slice = createSlice({
     },
     setAnimationActive(state: ChatSliceType, action: GlobalActionType) {
       state.animationActive = action.payload.animationActive;
+    },
+    setSocket(state: ChatSliceType, action: GlobalActionType) {
+      state.socket = action.payload.socket;
+    },
+    setConversation(state: ChatSliceType, action: GlobalActionType) {
+      state.conversation = action.payload.conversation;
+    },
+    addBulkMessages(state: ChatSliceType, action: GlobalActionType) {
+      state.messages = action.payload.messages;
+    },
+    addMessage(state: ChatSliceType, action: GlobalActionType) {
+      state.messages = [...state.messages, action.payload.message];
+    },
+    setTyping(state: ChatSliceType, action: GlobalActionType) {
+      state.typing = action.payload.typing;
     },
   },
 });

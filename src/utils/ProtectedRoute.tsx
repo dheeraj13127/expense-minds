@@ -1,12 +1,17 @@
 import { Dispatch, useEffect } from "react";
 import { Navigate, NavigateFunction, useNavigate } from "react-router-dom";
-import { getUserCurrencyURL, getUserProfileURL } from "../url/URL";
+import {
+  getConversationURL,
+  getUserCurrencyURL,
+  getUserProfileURL,
+} from "../url/URL";
 
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { UnknownAction } from "redux";
 import { userActions } from "../store/slices/user-slice";
 import toast from "react-hot-toast";
+import { chatActions } from "../store/slices/chats-slice";
 
 const checkAuthorizedToken = async (
   token: string | null,
@@ -41,6 +46,19 @@ const checkAuthorizedToken = async (
         accounts: user.accounts,
         categories: user.categories,
         currency: userCurrency.data.currency,
+      })
+    );
+    const conversation = await axios.get(getConversationURL, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    dispatch(
+      chatActions.setConversation({
+        conversation: conversation.data.conversation
+          ? conversation.data.conversation._id
+          : null,
       })
     );
     if (!user) {

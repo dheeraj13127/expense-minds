@@ -70,7 +70,7 @@ const DailyRecords = () => {
         recordsData: data ? data.data : [],
       })
     );
-    if (!fetchedRecordsByDaySummary) {
+    if (!fetchedRecordsByDaySummary && data) {
       const recordsSummary = await axios.post(
         processRecordsByDaySummaryURL,
         {

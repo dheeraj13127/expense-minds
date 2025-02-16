@@ -6,7 +6,7 @@ import {
 import React, { useState } from "react";
 import TipsBar from "../../../../components/TipsBar/TipsBar";
 import Calculator from "../../../../components/Calculator/Calculator";
-import { CircleLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { createRecordURL } from "../../../../url/URL";
@@ -313,7 +313,7 @@ const Manual = () => {
       ) : (
         <div className=" flex justify-center   items-center ">
           <div className=" my-80">
-            <CircleLoader color="#fff" />
+            <ClipLoader color="#fff" />
           </div>
         </div>
       )}
