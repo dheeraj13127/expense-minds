@@ -51,6 +51,16 @@ const Dashboard = () => {
           })
         );
       });
+      newSocket.on("typing-answer", () => {
+        setTimeout(() => {
+          dispatch(
+            chatActions.setTyping({
+              typing: true,
+            })
+          );
+        }, 500);
+      });
+
       return () => {
         newSocket.close();
         dispatch(

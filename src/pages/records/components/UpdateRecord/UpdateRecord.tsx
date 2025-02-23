@@ -8,7 +8,11 @@ import {
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { deleteRecordURL, updateRecordURL } from "../../../../url/URL";
+import {
+  deleteRecordURL,
+  indexRecordsToPineURL,
+  updateRecordURL,
+} from "../../../../url/URL";
 import toast from "react-hot-toast";
 import { recordsActions } from "../../../../store/slices/records-slice";
 
@@ -84,6 +88,15 @@ const UpdateRecord = ({ setShowUpdateModal, recordType }: UpdateRecordType) => {
           })
         );
         toast.success("Updated successfully !");
+        await axios.post(
+          indexRecordsToPineURL,
+          { data: {} },
+          {
+            headers: {
+              Authorization: "Bearer " + userDetails.token,
+            },
+          }
+        );
       } catch (err) {
         console.log(err);
         toast.error("Something went wrong !");
@@ -113,6 +126,15 @@ const UpdateRecord = ({ setShowUpdateModal, recordType }: UpdateRecordType) => {
         })
       );
       toast.success("Deleted successfully !");
+      await axios.post(
+        indexRecordsToPineURL,
+        { data: {} },
+        {
+          headers: {
+            Authorization: "Bearer " + userDetails.token,
+          },
+        }
+      );
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong !");

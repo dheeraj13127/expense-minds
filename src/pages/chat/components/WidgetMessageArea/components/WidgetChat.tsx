@@ -60,7 +60,7 @@ const WidgetChat = () => {
             {msg.sent_by === "bot" ? (
               <div>
                 <div className=" flex items-center space-x-1">
-                  <div className=" bg-white p-2 flex items-center rounded-full justify-center">
+                  <div className=" bg-white p-2 flex items-center rounded-full justify-center flex-shrink-0">
                     <img src={logo} alt="logo" className=" h-5 w-5" />
                   </div>
                   <p

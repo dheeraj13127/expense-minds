@@ -20,7 +20,7 @@ const VATCalculator = () => {
   };
   return (
     <div className="flex justify-center items-center ">
-      <div className="bg-zinc-700 border-4 border-white p-8 rounded-lg shadow-lg w-96 space-y-4">
+      <div className="bg-zinc-700 border-4 border-white px-8 pt-8 pb-2 rounded-lg shadow-lg w-96 space-y-4">
         <div className=" space-y-1">
           <label
             htmlFor="pecentage"
@@ -74,6 +74,12 @@ const VATCalculator = () => {
           >
             Calculate
           </button>
+        </div>
+        <div className="mt-4">
+          <p className="text-gray-300  font-inter text-xs text-center mb-3">
+            Powered by{" "}
+            <span className=" text-white font-medium">ExpenseMinds</span>
+          </p>
         </div>
       </div>
     </div>

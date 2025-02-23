@@ -29,6 +29,9 @@ const chatSlice: Slice = createSlice({
       state.messages = action.payload.messages;
     },
     addMessage(state: ChatSliceType, action: GlobalActionType) {
+      if (action.payload.message.sent_by === "bot") {
+        state.typing = false;
+      }
       state.messages = [...state.messages, action.payload.message];
     },
     setTyping(state: ChatSliceType, action: GlobalActionType) {

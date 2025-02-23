@@ -23,3 +23,4 @@ export const processRecordsByMonthlySummaryURL =
   backendURL + "/automated/monthly-summary";
 export const getConversationURL = backendURL + "/chat/getConversation";
 export const getMessagesURL = backendURL + "/chat/getMessages";
+export const indexRecordsToPineURL = backendURL + "/pinecone/indexRecords";

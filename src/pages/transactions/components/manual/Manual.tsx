@@ -9,7 +9,7 @@ import Calculator from "../../../../components/Calculator/Calculator";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { createRecordURL } from "../../../../url/URL";
+import { createRecordURL, indexRecordsToPineURL } from "../../../../url/URL";
 import CalenderBar from "../../../../components/CalenderBar/CalenderBar";
 import dayjs from "dayjs";
 import { formatToISODateString } from "../helpers/ISODateFormatter";
@@ -77,8 +77,16 @@ const Manual = () => {
             },
           }
         );
-
         toast.success("Added successfully !");
+        await axios.post(
+          indexRecordsToPineURL,
+          { data: {} },
+          {
+            headers: {
+              Authorization: "Bearer " + userDetails.token,
+            },
+          }
+        );
       } catch (err) {
         console.log(err);
         toast.error("Something went wrong !");
