@@ -8,7 +8,7 @@ import Error from "./pages/error/Error";
 
 const App = () => {
   return (
-    <div className="">
+    <div className=" scroll-smooth">
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route

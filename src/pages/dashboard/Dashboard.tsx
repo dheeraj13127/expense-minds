@@ -5,7 +5,6 @@ import Error from "./components/error/Error";
 import Statistics from "../statistics/Statistics";
 import Tools from "../tools/Tools";
 import Settings from "../settings/Settings";
-import Profile from "../profile/Profile";
 import Chat from "../chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -79,7 +78,7 @@ const Dashboard = () => {
         <Route path="/statistics/*" element={<Statistics />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/settings/*" element={<Settings />} />
-        <Route path="/profile" element={<Profile />} />
+
         <Route path="*" element={<Error />} />
       </Routes>
       {widgetActive && <Chat />}

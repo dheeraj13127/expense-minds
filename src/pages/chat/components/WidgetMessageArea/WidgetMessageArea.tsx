@@ -6,7 +6,7 @@ import WidgetInput from "./components/WidgetInput";
 import WidgetChat from "./components/WidgetChat";
 import { useEffect } from "react";
 import WidgetDefault from "./components/WidgetDefault";
-import WidgetCompany from "./components/WIdgetCompany";
+import WidgetCompany from "./components/WidgetCompany";
 const WidgetMessageArea = () => {
   const animation = useSelector<RootState, boolean>(
     (state) => state.chat.animationActive

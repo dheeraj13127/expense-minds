@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { chatActions } from "../../store/slices/chats-slice";
 import { ClipLoader } from "react-spinners";
+import { recordsActions } from "../../store/slices/records-slice";
 const Sidebar = ({ children }: any) => {
   const sidebarRef = useRef<any>();
   const dispatch = useDispatch();
@@ -124,11 +125,6 @@ const Sidebar = ({ children }: any) => {
     );
   };
 
-  const handleNavigateProfile = () => {
-    setNavActive(false);
-    navigate("/dashboard/profile");
-    setActiveTab("profile");
-  };
   const handleActivateChat = () => {
     setNavActive(false);
     dispatch(
@@ -144,6 +140,21 @@ const Sidebar = ({ children }: any) => {
   };
   const handleSignOut = () => {
     localStorage.clear();
+    dispatch(
+      recordsActions.setRecordsSummary({
+        recordsSummary: "",
+      })
+    );
+    dispatch(
+      recordsActions.setFetchedRecordsByMonthlySummary({
+        fetchedSummary: false,
+      })
+    );
+    dispatch(
+      recordsActions.setFetchedRecordsByDaySummary({
+        fetchedSummary: false,
+      })
+    );
     toast.success("Signed out");
     navigate("/");
   };
@@ -258,10 +269,7 @@ const Sidebar = ({ children }: any) => {
                 Expy AI Chat
               </button>
             </div>
-            <div
-              onClick={handleNavigateProfile}
-              className=" border-2 rounded-md p-1.5 flex flex-wrap  items-center justify-center space-x-2 cursor-pointer hover:bg-white hover:bg-opacity-30 duration-150"
-            >
+            <div className=" border-2 rounded-md p-1.5 flex flex-wrap  items-center justify-center space-x-2 cursor-pointer hover:bg-white hover:bg-opacity-30 duration-150">
               {user?.name ? (
                 <>
                   <div className="h-7 w-7 rounded-full bg-black flex justify-center items-center">

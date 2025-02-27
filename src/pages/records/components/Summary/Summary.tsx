@@ -29,7 +29,7 @@ const Summary = () => {
   const dispatch = useDispatch();
   const [result, setResult] = useState<dayjs.Dayjs>(dayjs());
   const token = localStorage.getItem("token");
-  const fetchRecordsByDay = useCallback(async () => {
+  const fetchRecordsSummary = useCallback(async () => {
     const recordsData = await axios.get(
       `${getRecordsBySummaryURL}?day=${dayjs().year()}-${dayjs().format("MM")}`,
       {
@@ -50,8 +50,8 @@ const Summary = () => {
     );
   }, [token, dispatch]);
   useEffect(() => {
-    fetchRecordsByDay();
-  }, [fetchRecordsByDay]);
+    fetchRecordsSummary();
+  }, [fetchRecordsSummary]);
 
   const handleFetchNewRecords = async () => {
     try {
