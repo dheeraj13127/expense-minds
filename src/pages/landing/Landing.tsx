@@ -21,7 +21,7 @@ const Landing = () => {
         navigate("/dashboard/records/daily");
       }
     } catch (err) {
-      console.log(err);
+      console.log("Error", err);
     }
   };
   return (
