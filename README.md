@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# ExpenseMinds
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![ExpenseMinds Image](./src/assets/em-landing.png)
 
-Currently, two official plugins are available:
+![ExpenseMinds View](./src/assets/landing-full.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+An easiest way to track and manage your expenses. Comes with well tracked statistics and assisted by AI Chatbot.
 
-## Expanding the ESLint configuration
+### Features:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+#### - Simple money tracking
 
-- Configure the top-level `parserOptions` property like this:
+It takes seconds to record daily transactions. Put them into clear and visualized categories such as Expense: Food, Shopping or Income: Salary, Gift.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<img src="./src/assets/transactions.png" width="750">
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+#### - Well analysed statistics
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+One report to give a clear view on your spending patterns. Understand where your money comes and goes with easy-to-read graphs.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<img src="./src/assets/statistics.png" width="750">
+
+#### - Automated assistance
+
+It is available 24/7 to guide you through your finances, answer queries, and help you make smarter financial decisions with ease.
+
+<img src="./src/assets/chatbot.png" width="750">
+
+### Built with :
+
+> React
+
+> Tailwind CSS
+
+> Typescript
+
+> Open AI
+
+> Express.js
+
+> Node.js
+
+> MongoDB
+
+> Pinecone
+
+> Socket.io
+
+> [!IMPORTANT]
+> This application is ready to be deployed to production. I had used Vercel to deploy both frontend and backend. Since this application involves websockets, the Vercel doesn't support it. Also I couldn't find any free hosting services for backend and I have decided not to host the application.You can checkout the backend code here: https://github.com/dheeraj13127/expense-minds-backend
+
+> [!IMPORTANT]
+> Made with :heart: by Dheeraj
