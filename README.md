@@ -4,7 +4,7 @@
 
 ![ExpenseMinds View](./src/assets/landing-full.png)
 
-An easiest way to track and manage your expenses. Comes with well tracked statistics and assisted by AI Chatbot.
+A simple way to track and manage your expenses, featuring detailed statistics and support from an AI chatbot.
 
 ### Features:
 
