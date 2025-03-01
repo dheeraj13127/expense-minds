@@ -12,4 +12,4 @@ An easiest way to track and manage your expenses. Comes with well tracked statis
 
 It takes seconds to record daily transactions. Put them into clear and visualized categories such as Expense: Food, Shopping or Income: Salary, Gift.
 
-<img src="/src/assests/transactions.png" width="750">
+<img src="./src/assets/transactions.png" width="750">
