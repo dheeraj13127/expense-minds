@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { recordsActions } from "../../../../store/slices/records-slice";
 import UpdateRecord from "../UpdateRecord/UpdateRecord";
 import SummaryBar from "../SummaryBar/SummaryBar";
+import { useNavigate } from "react-router-dom";
 
 const MonthlyRecords = () => {
   const income: number = useSelector<RootState, number>(
@@ -26,6 +27,7 @@ const MonthlyRecords = () => {
   const total: number = useSelector<RootState, number>(
     (state) => state.records.total
   );
+  const navigate = useNavigate();
   const recordsData: RecordsDataType["data"] = useSelector<
     RootState,
     RecordsDataType["data"]
@@ -164,6 +166,9 @@ const MonthlyRecords = () => {
       toast.error("Something went wrong !");
     }
   };
+  const handleAddRecord = () => {
+    navigate("/dashboard/transactions");
+  };
   return (
     <div className="">
       <div className="col-span-12">
@@ -198,9 +203,19 @@ const MonthlyRecords = () => {
           </div>
         ) : (
           <div className="flex h-screen">
-            <p className="text-white mx-auto my-52 font-poppins text-xl">
-              No records found
-            </p>
+            <div className="mx-auto my-52">
+              <p className="text-white  font-poppins text-xl">
+                No records found
+              </p>
+              <div className=" flex items-center justify-center mt-3">
+                <button
+                  onClick={handleAddRecord}
+                  className="text-black font-poppins bg-white px-2 py-1 rounded text-sm"
+                >
+                  Add record
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
