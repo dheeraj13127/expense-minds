@@ -1,4 +1,5 @@
 const backendURL = import.meta.env.VITE_BACKEND_URL;
+export const prodSocketURL = import.meta.env.VITE_PROD_SOCKET_URL;
 export const socketURL = import.meta.env.VITE_SOCKET_URL;
 export const authenticationURL = backendURL + "/auth/google";
 export const getUserProfileURL = backendURL + "/user/profile";
