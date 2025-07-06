@@ -13,7 +13,7 @@ import {
   RootState,
 } from "../../interfaces/Interfaces";
 import SocketIOClient, { Socket } from "socket.io-client";
-import { prodSocketURL } from "../../url/URL";
+import { socketURL } from "../../url/URL";
 import { useEffect } from "react";
 import { chatActions } from "../../store/slices/chats-slice";
 const Dashboard = () => {
@@ -26,9 +26,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (token) {
-      const newSocket: Socket = SocketIOClient(
-        `${prodSocketURL}/?token=${token}`
-      );
+      const newSocket: Socket = SocketIOClient(`${socketURL}/?token=${token}`);
 
       dispatch(
         chatActions.setSocket({
